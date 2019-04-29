@@ -1,19 +1,38 @@
 package com.arctouch.codechallenge.base
 
-import android.support.v7.app.AppCompatActivity
-import com.arctouch.codechallenge.api.TmdbApi
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import android.os.Bundle
+import com.arctouch.codechallenge.di.components.ApplicationComponent
+import com.arctouch.codechallenge.di.modules.ActivityModule
 
-abstract class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AbstractActivity {
 
-    protected val api: TmdbApi = Retrofit.Builder()
-        .baseUrl(TmdbApi.URL)
-        .client(OkHttpClient.Builder().build())
-        .addConverterFactory(MoshiConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .build()
-        .create(TmdbApi::class.java)
+    protected val appComponent: ApplicationComponent
+        get() = (application as ArchtouchApplication).getApplicationComponent()
+
+    protected val activityModule: ActivityModule
+        get() = ActivityModule(this)
+
+    constructor(layoutId: Int, viewContentId: Int) : super(layoutId, viewContentId) {}
+
+    constructor(layoutId: Int) : super(layoutId) {}
+
+    override fun initComponents() {
+
+    }
+
+    override fun initFragments(savedInstanceState: Bundle?) {
+
+    }
+
+    override fun initData() {
+
+    }
+
+    override fun initListeners() {
+
+    }
+
+    override fun injectComponents() {
+
+    }
 }

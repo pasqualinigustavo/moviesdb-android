@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Code Challenge</string>
     <string name="movie_and_genres">%s - %s</string>
+
+    <!--MoviesFragment-->
+    <string name="fragment_movies_lbl_title">Filmes</string>
+
+    <!--MESSAGES-->
+    <string name="message_close_app">Clique novamente para sair...</string>
+    <string name="label_please_wait">Aguarde...</string>
+    <string name="label_loading">Carregando</string>
+    <string name="error_communication">Problemas de comunicação com o servidor</string>
+    <string name="no_data_to_show">Sem informações</string>
 </resources>
