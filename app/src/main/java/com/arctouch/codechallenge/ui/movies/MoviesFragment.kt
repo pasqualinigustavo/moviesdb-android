@@ -55,7 +55,8 @@ class MoviesFragment : BaseFragment(), MoviesView, IAdapterDataSource {
 
     override fun initData() {
         currentDataSetPage = 1
-        presenter.getMovies(1)
+        presenter.getMovies(currentDataSetPage)
+        presenter.getGenres()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -174,6 +175,7 @@ class MoviesFragment : BaseFragment(), MoviesView, IAdapterDataSource {
     }
 
     override fun adapterUserWantsLoadMoreData(apadter: RecyclerView.Adapter<*>?) {
-
+        currentDataSetPage++
+        presenter.getMovies(currentDataSetPage)
     }
 }

@@ -3,6 +3,7 @@ package com.arctouch.codechallenge.ui.movies
 import android.util.Log
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.ArchtouchApplication
+import com.arctouch.codechallenge.data.Cache
 import com.arctouch.codechallenge.model.Movie
 import com.arctouch.codechallenge.ui.movies.router.MoviesRouter
 
@@ -29,6 +30,16 @@ class MoviesPresenter constructor(private val interactor: MoviesInteractor, priv
 
     private fun onError(error: Throwable) {
         Log.e(TAG, error.message)
+    }
+
+    fun getGenres() {
+        Log.d(TAG, "getGenres")
+        interactor.getGenres()
+                .subscribe({ response ->
+                    Cache.cacheGenres(response.genres)
+                }, { error ->
+                    mView?.showError(ArchtouchApplication.getAppContext().getString(R.string.error_communication))
+                })
     }
 
     fun getMovies(currentPage: Int) {

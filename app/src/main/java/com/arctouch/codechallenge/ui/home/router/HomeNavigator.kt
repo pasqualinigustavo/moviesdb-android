@@ -4,6 +4,7 @@ import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.BaseFragment
 import com.arctouch.codechallenge.model.Movie
 import com.arctouch.codechallenge.ui.home.HomeActivity
+import com.arctouch.codechallenge.ui.moviedetails.MovieDetailsFragment
 
 class HomeNavigator(private val activity: HomeActivity) {
 
@@ -16,7 +17,7 @@ class HomeNavigator(private val activity: HomeActivity) {
     }
 
     fun showMovieDetails(movie: Movie) {
-        //switchContent
+        switchContent(MovieDetailsFragment.newInstance(movie), true)
     }
 
     fun switchContent(fragment: BaseFragment, addToBackStack: Boolean) {
@@ -34,9 +35,5 @@ class HomeNavigator(private val activity: HomeActivity) {
         val fm = activity.supportFragmentManager
         val count = fm.backStackEntryCount
         (0 until count).forEach { _ -> fm.popBackStack() }
-    }
-
-    fun closeApp() {
-        activity.finish()
     }
 }
