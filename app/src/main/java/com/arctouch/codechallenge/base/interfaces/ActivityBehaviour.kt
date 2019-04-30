@@ -8,10 +8,6 @@ interface ActivityBehaviour {
 
     fun switchContent(fragment: Fragment, idRes: Int, animation: Boolean)
 
-    fun addContent(fragment: Fragment, addToBackStack: Boolean)
-
-    fun addContent(fragment: Fragment, idRes: Int, animation: Boolean)
-
     fun clearFragmentStack()
 
     fun activityEffectTransition(enterAnim: Int, exitAnim: Int)

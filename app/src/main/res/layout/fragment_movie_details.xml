@@ -1,19 +1,75 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/posterImageView"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_image_placeholder"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/fragment_movies__textview_noinfo"
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/posterImageView"
+        app:layout_constraintTop_toTopOf="@+id/posterImageView"
+        tools:text="Titanic" />
+
+    <TextView
+        android:id="@+id/genresTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/posterImageView"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@+id/posterImageView"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        tools:text="Drama, Romance, Thriller" />
+
+    <TextView
+        android:id="@+id/releaseDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintLeft_toRightOf="@id/posterImageView"
+        app:layout_constraintTop_toBottomOf="@+id/genresTextView"
+        tools:text="19/12/1997" />
+
+    <TextView
+        android:id="@+id/movieOverview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:gravity="center"
-        android:text="@string/no_data_to_show"
-        android:textSize="@dimen/font_size_I"
-        android:visibility="visible" />
-
-</FrameLayout>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@+id/posterImageView"
+        app:layout_constraintTop_toBottomOf="@+id/releaseDateTextView"
+        tools:text="Titanic" />
+</android.support.constraint.ConstraintLayout>

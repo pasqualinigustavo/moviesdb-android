@@ -126,12 +126,6 @@ abstract class BaseFragment() : Fragment() {
         }
     }
 
-    protected fun addContent(fragmentClass: BaseFragment, addToBackStack: Boolean) {
-        if (this.activityBehaviour != null) {
-            activityBehaviour?.addContent(fragmentClass, addToBackStack)
-        }
-    }
-
     protected fun backFragment() {
         if (this.activityBehaviour != null) {
             activityBehaviour?.backFragment()

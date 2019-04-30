@@ -3,8 +3,6 @@ package com.arctouch.codechallenge.base
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -137,20 +135,6 @@ abstract class AbstractActivity : AppCompatActivity, ActivityBehaviour {
         val transaction = this.supportFragmentManager.beginTransaction()
         val tag = fragment.javaClass.canonicalName
         transaction.replace(idRes, fragment, tag)
-        if (addToBackStack) {
-            transaction.addToBackStack(tag)
-        }
-        transaction.commit()
-    }
-
-    override fun addContent(fragment: Fragment, addBackStack: Boolean) {
-        this.addContent(fragment, this.viewContentId, addBackStack)
-    }
-
-    override fun addContent(fragment: Fragment, idRes: Int, addToBackStack: Boolean) {
-        val transaction = this.supportFragmentManager.beginTransaction()
-        val tag = fragment.javaClass.canonicalName
-        transaction.add(idRes, fragment, tag)
         if (addToBackStack) {
             transaction.addToBackStack(tag)
         }

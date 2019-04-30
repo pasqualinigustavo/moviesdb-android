@@ -28,10 +28,6 @@ class MoviesPresenter constructor(private val interactor: MoviesInteractor, priv
         this.mView = null
     }
 
-    private fun onError(error: Throwable) {
-        Log.e(TAG, error.message)
-    }
-
     fun getGenres() {
         Log.d(TAG, "getGenres")
         interactor.getGenres()

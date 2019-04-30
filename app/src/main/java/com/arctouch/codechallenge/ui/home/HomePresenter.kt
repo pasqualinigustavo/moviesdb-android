@@ -6,11 +6,11 @@ class HomePresenter(private val router: HomeRouter) {
 
     var mView: HomeView? = null
 
-    fun bindView(view: HomeView) {
+    fun attachView(view: HomeView) {
         this.mView = view
     }
 
-    fun unbindView() {
+    fun detachView() {
         this.mView = null
     }
 

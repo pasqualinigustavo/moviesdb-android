@@ -39,7 +39,7 @@ class HomeActivity : AbstractActivity(R.layout.activity_main, R.id.activity_cont
 
     override fun initComponents() {
         component.inject(this)
-        presenter.bindView(this)
+        presenter.attachView(this)
         createActionBar()
     }
 
@@ -67,6 +67,11 @@ class HomeActivity : AbstractActivity(R.layout.activity_main, R.id.activity_cont
 
     override fun injectComponents() {
 
+    }
+
+    override fun onDestroy() {
+        presenter.detachView()
+        super.onDestroy()
     }
 
     override fun setToolbarTitle(title: String) {

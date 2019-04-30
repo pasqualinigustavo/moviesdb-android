@@ -1,6 +1,8 @@
 package com.arctouch.codechallenge.ui.moviedetails
 
 import android.util.Log
+import com.arctouch.codechallenge.R
+import com.arctouch.codechallenge.base.ArchtouchApplication
 
 /**
  * @author Gustavo Pasqualini
@@ -23,22 +25,18 @@ class MovieDetailsPresenter constructor(private val interactor: MovieDetailsInte
         this.mView = null
     }
 
-    private fun onError(error: Throwable) {
-        Log.e(TAG, error.message)
-    }
-
-    fun getMovieDetails() {
-        Log.d(TAG, "getMovieDetails")
-//        interactor.getMovies(currentPage)
-//                .doOnSubscribe { mView?.showLoadingView(true) }
-//                .subscribe({ response ->
-//                    mView?.showLoadingView(false)
-//                    if (response != null) {
-//                        mView?.showMovies(response.results)
-//                    }
-//                }, { error ->
-//                    mView?.showLoadingView(false)
-//                    mView?.showError(ArchtouchApplication.getAppContext().getString(R.string.error_communication))
-//                })
+    fun getMovie(id: Long) {
+        Log.d(TAG, "getMovie")
+        interactor.getMovies(id)
+                .doOnSubscribe { mView?.showProgressDialog() }
+                .subscribe({ response ->
+                    mView?.hideProgressDialog()
+                    if (response != null) {
+                        mView?.showMovie(response)
+                    }
+                }, { error ->
+                    mView?.hideProgressDialog()
+                    mView?.showError(ArchtouchApplication.getAppContext().getString(R.string.error_communication))
+                })
     }
 }

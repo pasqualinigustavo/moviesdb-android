@@ -68,7 +68,7 @@ constructor(val context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolde
                 userWantsLoadMore(loadViewHolder.progressBar)
             }
         } else if (holder is RecyclerViewAdapterViewHolder) {
-            val itemRowHolder = holder as RecyclerViewAdapterViewHolder
+            val itemRowHolder = holder
             val entity = items[position]
 
             itemRowHolder.titleTextView.text = entity.title
@@ -137,15 +137,4 @@ constructor(val context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
     }
-
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-
-        fun bind(movie: Movie) {
-
-        }
-    }
-
-
 }
