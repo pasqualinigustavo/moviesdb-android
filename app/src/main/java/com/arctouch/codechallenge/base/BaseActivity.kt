@@ -7,7 +7,7 @@ import com.arctouch.codechallenge.di.modules.ActivityModule
 open class BaseActivity : AbstractActivity {
 
     protected val appComponent: ApplicationComponent
-        get() = (application as ArchtouchApplication).applicationComponent
+        get() = (application as ArchtouchApplication).getApplicationComponent()
 
     protected val activityModule: ActivityModule
         get() = ActivityModule(this)
