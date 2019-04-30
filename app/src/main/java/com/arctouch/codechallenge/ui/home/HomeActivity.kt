@@ -20,7 +20,7 @@ import javax.inject.Inject
 class HomeActivity : AbstractActivity(R.layout.activity_main, R.id.activity_content), ActivityToolbarBehaviour, HomeView {
 
     protected val appComponent: ApplicationComponent
-        get() = (application as ArchtouchApplication).getApplicationComponent()
+        get() = (application as ArchtouchApplication).applicationComponent
 
     @Inject
     lateinit var presenter: HomePresenter

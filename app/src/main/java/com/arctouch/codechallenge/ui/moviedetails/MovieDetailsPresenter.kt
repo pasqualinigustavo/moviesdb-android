@@ -36,7 +36,7 @@ class MovieDetailsPresenter constructor(private val interactor: MovieDetailsInte
                     }
                 }, { error ->
                     mView?.hideProgressDialog()
-                    mView?.showError(ArchtouchApplication.getAppContext().getString(R.string.error_communication))
+                    mView?.showError(ArchtouchApplication.appContext.getString(R.string.error_communication))
                 })
     }
 }

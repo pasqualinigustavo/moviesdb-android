@@ -9,7 +9,7 @@ class ApplicationDependency {
 
     lateinit var applicationComponent: ApplicationComponent
 
-    fun getApplicationComponent(application: ArchtouchApplication): ApplicationComponent? {
+    fun getApplicationComponent(application: ArchtouchApplication): ApplicationComponent {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationDIModule(ApplicationDIModule(application))
                 .build()

@@ -34,7 +34,7 @@ class MoviesPresenter constructor(private val interactor: MoviesInteractor, priv
                 .subscribe({ response ->
                     Cache.cacheGenres(response.genres)
                 }, { error ->
-                    mView?.showError(ArchtouchApplication.getAppContext().getString(R.string.error_communication))
+                    mView?.showError(ArchtouchApplication.appContext.getString(R.string.error_communication))
                 })
     }
 
@@ -49,7 +49,7 @@ class MoviesPresenter constructor(private val interactor: MoviesInteractor, priv
                     }
                 }, { error ->
                     mView?.showLoadingView(false)
-                    mView?.showError(ArchtouchApplication.getAppContext().getString(R.string.error_communication))
+                    mView?.showError(ArchtouchApplication.appContext.getString(R.string.error_communication))
                 })
     }
 

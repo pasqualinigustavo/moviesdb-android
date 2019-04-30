@@ -12,5 +12,5 @@ interface ApplicationComponent {
 
     fun context(): Context
 
-    fun inject(holder: ComponentHolder)
+    fun inject(holder: ComponentHolder?)
 }
