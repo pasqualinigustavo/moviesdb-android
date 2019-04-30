@@ -16,6 +16,8 @@ interface MoviesEndpoint {
             @Query("language") language: String
     ): Observable<GenreResponse>
 
+    //we have only 3 upcoming movies in brazil to show... if you put language/region US you'll see pagination!!
+    //try it!!
     @GET("movie/upcoming")
     fun upcomingMovies(
             @Query("api_key") apiKey: String,
