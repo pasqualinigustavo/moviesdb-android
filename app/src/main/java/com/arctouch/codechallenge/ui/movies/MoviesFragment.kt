@@ -101,12 +101,6 @@ class MoviesFragment : BaseFragment(), MoviesView, IAdapterDataSource {
         setHasOptionsMenu(false)
         setToolbarTitle(getString(R.string.fragment_movies_lbl_title))
 
-        fragment_movies__swiperefresh.setColorSchemeColors(
-                ContextCompat.getColor(activity!!, R.color.colorPrimary),
-                ContextCompat.getColor(activity!!, R.color.colorAccent),
-                ContextCompat.getColor(activity!!, R.color.colorPrimaryDark)
-        )
-
         fragment_movies__recyclerview.setHasFixedSize(false)
         fragment_movies__recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
