@@ -1,14 +1,12 @@
 package com.arctouch.codechallenge.base
 
 import android.content.Context
-import android.support.multidex.MultiDex
-import android.support.multidex.MultiDexApplication
-import android.support.v7.app.AppCompatDelegate
 import android.util.Log
-
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
 import com.arctouch.codechallenge.di.ApplicationDependency
 import com.arctouch.codechallenge.di.components.ApplicationComponent
-import com.arctouch.codechallenge.di.components.ComponentHolder
 
 class ArchtouchApplication : MultiDexApplication() {
 

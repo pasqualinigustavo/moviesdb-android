@@ -3,11 +3,11 @@ package com.arctouch.codechallenge.base
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.interfaces.ActivityBehaviour
 import java.util.*

@@ -2,13 +2,9 @@ package com.arctouch.codechallenge.base
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.Theme
-import com.arctouch.codechallenge.R
+import androidx.fragment.app.Fragment
 import com.arctouch.codechallenge.base.interfaces.ActivityBehaviour
 import com.arctouch.codechallenge.base.interfaces.ActivityToolbarBehaviour
 import com.arctouch.codechallenge.di.components.MainComponent
@@ -19,7 +15,7 @@ abstract class BaseFragment() : Fragment() {
     var activityBehaviour: ActivityBehaviour? = null
     var activityToolbarBehaviour: ActivityToolbarBehaviour? = null
 
-    private var progressDialog: MaterialDialog? = null
+    //private var progressDialog: MaterialDialog? = null
     private var hasContext = false
 
     fun getMainComponent(): MainComponent? {
@@ -86,32 +82,32 @@ abstract class BaseFragment() : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-        try {
-            if (progressDialog != null) {
-                progressDialog!!.dismiss()
-            }
-        } catch (e: Exception) {
-            Log.e(javaClass.simpleName, e.message, e)
-        }
+//        try {
+//            if (progressDialog != null) {
+//                progressDialog!!.dismiss()
+//            }
+//        } catch (e: Exception) {
+//            Log.e(javaClass.simpleName, e.message, e)
+//        }
 
     }
 
     fun showProgressDialog() {
-        if (context != null) {
-            val b = MaterialDialog.Builder(context!!)
-            b.title(R.string.label_please_wait)
-            b.cancelable(false)
-            b.theme(Theme.LIGHT)
-            b.content(R.string.label_loading)
-            b.progress(true, 0)
-            progressDialog = b.show()
-        }
+//        if (context != null) {
+//            val b = MaterialDialog.Builder(context!!)
+//            b.title(R.string.label_please_wait)
+//            b.cancelable(false)
+//            b.theme(Theme.LIGHT)
+//            b.content(R.string.label_loading)
+//            b.progress(true, 0)
+//            progressDialog = b.show()
+//        }
     }
 
     fun hideProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog!!.hide()
-        }
+//        if (progressDialog != null) {
+//            progressDialog!!.hide()
+//        }
     }
 
     private fun requestFocus(view: View) {

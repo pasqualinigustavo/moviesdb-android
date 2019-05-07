@@ -1,6 +1,6 @@
 package com.arctouch.codechallenge.base.interfaces
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 interface ActivityBehaviour {
 

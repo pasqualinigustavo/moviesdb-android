@@ -3,15 +3,14 @@
 package com.arctouch.codechallenge.ui.movies
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.BaseFragment
 import com.arctouch.codechallenge.base.interfaces.IAdapterDataSource
@@ -102,7 +101,7 @@ class MoviesFragment : BaseFragment(), MoviesView, IAdapterDataSource {
         setToolbarTitle(getString(R.string.fragment_movies_lbl_title))
 
         fragment_movies__recyclerview.setHasFixedSize(false)
-        fragment_movies__recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        fragment_movies__recyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
         val dividerItemDecoration = DividerItemDecoration(fragment_movies__recyclerview.getContext(), LinearLayoutManager.VERTICAL)
         fragment_movies__recyclerview.addItemDecoration(dividerItemDecoration)
@@ -163,8 +162,8 @@ class MoviesFragment : BaseFragment(), MoviesView, IAdapterDataSource {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         presenter.detachView()
     }
 
