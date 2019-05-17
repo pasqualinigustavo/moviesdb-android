@@ -20,10 +20,6 @@ open class BaseActivity : AbstractActivity {
 
     }
 
-    override fun initFragments(savedInstanceState: Bundle?) {
-
-    }
-
     override fun initData() {
 
     }

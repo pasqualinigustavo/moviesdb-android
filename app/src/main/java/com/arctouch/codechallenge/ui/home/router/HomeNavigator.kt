@@ -1,10 +1,10 @@
 package com.arctouch.codechallenge.ui.home.router
 
+import androidx.navigation.Navigation
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.base.BaseFragment
 import com.arctouch.codechallenge.model.Movie
 import com.arctouch.codechallenge.ui.home.HomeActivity
-import com.arctouch.codechallenge.ui.moviedetails.MovieDetailsFragment
+import com.arctouch.codechallenge.ui.movies.MoviesFragmentDirections
 
 class HomeNavigator(private val activity: HomeActivity) {
 
@@ -12,28 +12,15 @@ class HomeNavigator(private val activity: HomeActivity) {
         private val TAG = HomeNavigator::class.java.simpleName
     }
 
-    fun clearFragmentsStack() {
-        activity.clearFragmentStack()
-    }
-
     fun showMovieDetails(movie: Movie) {
-        switchContent(MovieDetailsFragment.newInstance(movie), true)
-    }
+        val navController = Navigation.findNavController(activity, R.id.nav_host)
 
-    fun switchContent(fragment: BaseFragment, addToBackStack: Boolean) {
-        val transaction = activity.supportFragmentManager.beginTransaction()
-        val tag = fragment.javaClass.canonicalName
-        transaction.replace(R.id.activity_content, fragment, tag)
-        if (addToBackStack) {
-            transaction.addToBackStack(tag)
-        }
-        transaction.commit()
-        activity.displayHomeUp()
-    }
+//      //with args bundle
+//        val args = MovieDetailsFragment.bundleArgs(movie)
+//        navController.navigate(R.id.movieDetailsFragment, args)
 
-    fun clearBackStack() {
-        val fm = activity.supportFragmentManager
-        val count = fm.backStackEntryCount
-        (0 until count).forEach { _ -> fm.popBackStack() }
+//      //safe args
+        val dir = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(movie)
+        navController.navigate(dir)
     }
 }

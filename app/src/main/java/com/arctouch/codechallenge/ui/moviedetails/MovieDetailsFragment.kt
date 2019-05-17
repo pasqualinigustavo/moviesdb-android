@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.navArgs
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.BaseFragment
 import com.arctouch.codechallenge.model.Movie
@@ -25,14 +26,16 @@ import javax.inject.Inject
 
 class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
 
+    private val args: MovieDetailsFragmentArgs by navArgs()
+
     companion object {
         val TAG = MovieDetailsFragment::class.java.simpleName
+        private const val ARG_MOVIE = "movie"
 
-        @JvmStatic
-        fun newInstance(movie: Movie): MovieDetailsFragment {
-            val fragment = MovieDetailsFragment()
-            fragment.movie = movie
-            return fragment
+        fun bundleArgs(movie: Movie): Bundle {
+            return Bundle().apply {
+                this.putParcelable(ARG_MOVIE, movie)
+            }
         }
     }
 
@@ -62,6 +65,7 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
 
     override fun initComponent(view: View?, savedInstanceState: Bundle?) {
         Log.d(TAG, "initComponents")
+        movie = args?.movie
         presenter.attachView(this)
         setHasOptionsMenu(false)
         setToolbarTitle(movie?.title)
@@ -100,5 +104,13 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
         }
         //overview
         movieOverview.text = movie.overview
+    }
+
+    override fun showProgressDialog() {
+
+    }
+
+    override fun hideProgressDialog() {
+
     }
 }

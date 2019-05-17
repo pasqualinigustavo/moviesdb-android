@@ -5,6 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.AbstractActivity
 import com.arctouch.codechallenge.base.ArchtouchApplication
@@ -24,6 +29,8 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
 
     @Inject
     lateinit var presenter: HomePresenter
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     companion object {
         val TAG = HomeActivity::class.java.simpleName
@@ -40,7 +47,11 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
     override fun initComponents() {
         component.inject(this)
         presenter.attachView(this)
+        navController = Navigation.findNavController(this, R.id.nav_host)
+        appBarConfiguration = AppBarConfiguration(navController.graph, null)
+        // Set up ActionBar
         createActionBar()
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,19 +61,6 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
 
     override fun initData() {
 
-    }
-
-    override fun initFragments(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            clearBackStackWhenActivityWasKilled()
-            switchContent(MoviesFragment.newInstance(), this.viewContentId, false)
-        }
-    }
-
-    fun clearBackStackWhenActivityWasKilled() {
-        if (this.hasBackStack()) {
-            supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        }
     }
 
     override fun injectComponents() {
@@ -103,16 +101,12 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
     override fun initListeners() {
-        toolbar.setNavigationOnClickListener {
-            if (hasBackStack()) {
-                supportFragmentManager.popBackStack()
-            }
-        }
+//        toolbar.setNavigationOnClickListener {
+//            if (hasBackStack()) {
+//                supportFragmentManager.popBackStack()
+//            }
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -126,9 +120,6 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        if (hasBackStack()) {
-            supportFragmentManager.popBackStack()
-        }
-        return true
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

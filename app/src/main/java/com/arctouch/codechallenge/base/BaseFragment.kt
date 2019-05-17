@@ -3,7 +3,6 @@ package com.arctouch.codechallenge.base
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.arctouch.codechallenge.base.interfaces.ActivityBehaviour
 import com.arctouch.codechallenge.base.interfaces.ActivityToolbarBehaviour
@@ -14,8 +13,6 @@ abstract class BaseFragment() : Fragment() {
 
     var activityBehaviour: ActivityBehaviour? = null
     var activityToolbarBehaviour: ActivityToolbarBehaviour? = null
-
-    //private var progressDialog: MaterialDialog? = null
     private var hasContext = false
 
     fun getMainComponent(): MainComponent? {
@@ -77,54 +74,5 @@ abstract class BaseFragment() : Fragment() {
     override fun onStop() {
         super.onStop()
         System.gc()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-//        try {
-//            if (progressDialog != null) {
-//                progressDialog!!.dismiss()
-//            }
-//        } catch (e: Exception) {
-//            Log.e(javaClass.simpleName, e.message, e)
-//        }
-
-    }
-
-    fun showProgressDialog() {
-//        if (context != null) {
-//            val b = MaterialDialog.Builder(context!!)
-//            b.title(R.string.label_please_wait)
-//            b.cancelable(false)
-//            b.theme(Theme.LIGHT)
-//            b.content(R.string.label_loading)
-//            b.progress(true, 0)
-//            progressDialog = b.show()
-//        }
-    }
-
-    fun hideProgressDialog() {
-//        if (progressDialog != null) {
-//            progressDialog!!.hide()
-//        }
-    }
-
-    private fun requestFocus(view: View) {
-        if (view.requestFocus()) {
-            activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-        }
-    }
-
-    protected fun switchContent(fragmentClass: BaseFragment, addToBackStack: Boolean) {
-        if (this.activityBehaviour != null) {
-            activityBehaviour?.switchContent(fragmentClass, addToBackStack)
-        }
-    }
-
-    protected fun backFragment() {
-        if (this.activityBehaviour != null) {
-            activityBehaviour?.backFragment()
-        }
     }
 }
