@@ -17,7 +17,7 @@ import com.arctouch.codechallenge.ui.movies.MoviesFragment
 import kotlinx.android.synthetic.main.actionbar.*
 import javax.inject.Inject
 
-class HomeActivity : AbstractActivity(R.layout.activity_main, R.id.activity_content), ActivityToolbarBehaviour, HomeView {
+class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBehaviour, HomeView {
 
     protected val appComponent: ApplicationComponent
         get() = (application as ArchtouchApplication).getApplicationComponent()
