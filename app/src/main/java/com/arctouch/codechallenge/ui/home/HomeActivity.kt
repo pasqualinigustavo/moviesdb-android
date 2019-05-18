@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,7 +17,6 @@ import com.arctouch.codechallenge.di.components.ApplicationComponent
 import com.arctouch.codechallenge.di.components.DaggerMainComponent
 import com.arctouch.codechallenge.di.components.MainComponent
 import com.arctouch.codechallenge.ui.home.di.HomeModule
-import com.arctouch.codechallenge.ui.movies.MoviesFragment
 import kotlinx.android.synthetic.main.actionbar.*
 import javax.inject.Inject
 
@@ -86,9 +84,6 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
         setSupportActionBar(toolbar)
         supportActionBar.let {
             supportActionBar?.setDisplayShowTitleEnabled(false)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setDisplayUseLogoEnabled(true)
-            //supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_left)
         }
     }
 
@@ -96,17 +91,11 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
         val isRoot = !this.hasBackStack()
         supportActionBar.let {
             supportActionBar?.setDisplayShowHomeEnabled(!isRoot)
-            supportActionBar?.setDisplayHomeAsUpEnabled(!isRoot)
-            supportActionBar?.setHomeButtonEnabled(!isRoot)
         }
     }
 
     override fun initListeners() {
-//        toolbar.setNavigationOnClickListener {
-//            if (hasBackStack()) {
-//                supportFragmentManager.popBackStack()
-//            }
-//        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

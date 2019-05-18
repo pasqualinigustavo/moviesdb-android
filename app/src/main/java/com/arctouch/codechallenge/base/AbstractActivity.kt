@@ -77,51 +77,48 @@ abstract class AbstractActivity : AppCompatActivity, ActivityBehaviour {
         this.blockOnBackPress = false
 
         this.initComponents()
-        this.initFragments(savedInstanceState)
         this.initListeners()
         this.initData()
     }
 
-    /**
-     * Method onBackPressed was override putting the default behavior to the activity in doesn't
-     * close immediately, given the the opportunity to change their mind
-     */
-    override fun onBackPressed() {
-
-        if (this.blockOnBackPress) {
-            return
-        }
-
-        if (!questionBeforeClose) {
-            super.onBackPressed()
-            return
-        }
-
-        if (this.hasBackStack()) {
-            super.onBackPressed()
-            return
-        }
-
-        if (this.tryToClose != null) {
-            val tryToCloseAgain = Date()
-            val diff = tryToCloseAgain.time - tryToClose!!.time
-            val diffSec = diff / 1000
-
-            if (diffSec > 1) {
-                this.tryToClose = null
-            } else {
-                super.onBackPressed()
-                return
-            }
-        }
-
-        this.tryToClose = Date()
-        Toast.makeText(this, getString(R.string.message_close_app), Toast.LENGTH_SHORT).show()
-    }
+//    /**
+//     * Method onBackPressed was override putting the default behavior to the activity in doesn't
+//     * close immediately, given the the opportunity to change their mind
+//     */
+//    override fun onBackPressed() {
+//
+//        if (this.blockOnBackPress) {
+//            return
+//        }
+//
+//        if (!questionBeforeClose) {
+//            super.onBackPressed()
+//            return
+//        }
+//
+//        if (this.hasBackStack()) {
+//            super.onBackPressed()
+//            return
+//        }
+//
+//        if (this.tryToClose != null) {
+//            val tryToCloseAgain = Date()
+//            val diff = tryToCloseAgain.time - tryToClose!!.time
+//            val diffSec = diff / 1000
+//
+//            if (diffSec > 1) {
+//                this.tryToClose = null
+//            } else {
+//                super.onBackPressed()
+//                return
+//            }
+//        }
+//
+//        this.tryToClose = Date()
+//        Toast.makeText(this, getString(R.string.message_close_app), Toast.LENGTH_SHORT).show()
+//    }
 
     protected abstract fun initComponents()
-
-    protected abstract fun initFragments(savedInstanceState: Bundle?)
 
     protected abstract fun initData()
 
