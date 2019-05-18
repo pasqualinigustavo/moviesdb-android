@@ -1,6 +1,6 @@
-package com.arctouch.codechallenge.ui.home
+package com.arctouch.codechallenge.activities.home
 
-import com.arctouch.codechallenge.ui.home.router.HomeRouter
+import com.arctouch.codechallenge.activities.home.router.HomeRouter
 
 class HomePresenter(private val router: HomeRouter) {
 

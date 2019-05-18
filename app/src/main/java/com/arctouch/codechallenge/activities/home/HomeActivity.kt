@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.ui.home
+package com.arctouch.codechallenge.activities.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,16 +13,16 @@ import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.AbstractActivity
 import com.arctouch.codechallenge.base.ArchtouchApplication
 import com.arctouch.codechallenge.base.interfaces.ActivityToolbarBehaviour
-import com.arctouch.codechallenge.di.components.ApplicationComponent
-import com.arctouch.codechallenge.di.components.DaggerMainComponent
-import com.arctouch.codechallenge.di.components.MainComponent
-import com.arctouch.codechallenge.ui.home.di.HomeModule
+import com.arctouch.codechallenge.di.components.AppComponent
+import com.arctouch.codechallenge.activities.home.di.DaggerHomeComponent
+import com.arctouch.codechallenge.activities.home.di.HomeComponent
+import com.arctouch.codechallenge.activities.home.di.HomeModule
 import kotlinx.android.synthetic.main.actionbar.*
 import javax.inject.Inject
 
 class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBehaviour, HomeView {
 
-    protected val appComponent: ApplicationComponent
+    protected val appComponent: AppComponent
         get() = (application as ArchtouchApplication).getApplicationComponent()
 
     @Inject
@@ -34,8 +34,8 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
         val TAG = HomeActivity::class.java.simpleName
     }
 
-    val component: MainComponent by lazy {
-        DaggerMainComponent.builder()
+    val component: HomeComponent by lazy {
+        DaggerHomeComponent.builder()
                 .parent(appComponent)
                 .module(HomeModule())
                 .target(this)

@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.ui.home.router
+package com.arctouch.codechallenge.activities.home.router
 
 class HomeActivityRouter(private val navigator: HomeNavigator) : HomeRouter {
 

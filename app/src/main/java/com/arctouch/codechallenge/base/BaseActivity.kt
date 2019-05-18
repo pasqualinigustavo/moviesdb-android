@@ -1,12 +1,11 @@
 package com.arctouch.codechallenge.base
 
-import android.os.Bundle
-import com.arctouch.codechallenge.di.components.ApplicationComponent
+import com.arctouch.codechallenge.di.components.AppComponent
 import com.arctouch.codechallenge.di.modules.ActivityModule
 
 open class BaseActivity : AbstractActivity {
 
-    protected val appComponent: ApplicationComponent
+    protected val appComponent: AppComponent
         get() = (application as ArchtouchApplication).getApplicationComponent()
 
     protected val activityModule: ActivityModule

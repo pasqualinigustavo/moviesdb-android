@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name="com.arctouch.codechallenge.ui.home.HomeActivity"
+            android:name="com.arctouch.codechallenge.activities.home.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.NoActionBar"

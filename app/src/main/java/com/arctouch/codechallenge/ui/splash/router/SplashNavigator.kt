@@ -1,7 +1,7 @@
 package com.archtouch.codechallenge.splash.router
 
 import android.content.Intent
-import com.arctouch.codechallenge.ui.home.HomeActivity
+import com.arctouch.codechallenge.activities.home.HomeActivity
 import com.arctouch.codechallenge.ui.splash.SplashActivity
 
 class SplashNavigator(private val activity: SplashActivity) {

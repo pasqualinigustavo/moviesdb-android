@@ -3,7 +3,7 @@ package com.archtouch.codechallenge.splash.di
 import com.archtouch.codechallenge.splash.router.SplashActivityRouter
 import com.archtouch.codechallenge.splash.router.SplashNavigator
 import com.archtouch.codechallenge.splash.router.SplashRouter
-import com.arctouch.codechallenge.di.PerActivity
+import com.arctouch.codechallenge.di.annotations.PerActivity
 import com.arctouch.codechallenge.ui.splash.SplashActivity
 import com.arctouch.codechallenge.ui.splash.SplashPresenter
 import dagger.Module

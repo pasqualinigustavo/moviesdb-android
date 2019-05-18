@@ -6,16 +6,16 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.arctouch.codechallenge.base.interfaces.ActivityBehaviour
 import com.arctouch.codechallenge.base.interfaces.ActivityToolbarBehaviour
-import com.arctouch.codechallenge.di.components.MainComponent
-import com.arctouch.codechallenge.ui.home.HomeActivity
+import com.arctouch.codechallenge.activities.home.di.HomeComponent
+import com.arctouch.codechallenge.activities.home.HomeActivity
 
-abstract class BaseFragment() : Fragment() {
+abstract class BaseFragment : Fragment() {
 
     var activityBehaviour: ActivityBehaviour? = null
     var activityToolbarBehaviour: ActivityToolbarBehaviour? = null
     private var hasContext = false
 
-    fun getMainComponent(): MainComponent? {
+    fun getMainComponent(): HomeComponent? {
         val activity = activity
         return if (activity is HomeActivity) {
             activity.component

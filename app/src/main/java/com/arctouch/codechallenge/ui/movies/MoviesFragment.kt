@@ -46,7 +46,7 @@ class MoviesFragment : BaseFragment(), MoviesView, IAdapterDataSource {
 
     override fun injectComponents() {
         DaggerMoviesComponent.builder()
-                .mainComponent(getMainComponent())
+                .homeComponent(getMainComponent())
                 .moviesModule(MoviesModule())
                 .build()
                 .inject(this)

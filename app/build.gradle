@@ -112,9 +112,13 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
 
     //dagger
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
+
 
     //images
     implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"

@@ -1,8 +1,8 @@
 package com.arctouch.codechallenge.ui.movies.di
 
-import com.arctouch.codechallenge.di.PerFragment
+import com.arctouch.codechallenge.activities.home.router.HomeNavigator
+import com.arctouch.codechallenge.di.annotations.PerFragment
 import com.arctouch.codechallenge.rest.APIComm
-import com.arctouch.codechallenge.ui.home.router.HomeNavigator
 import com.arctouch.codechallenge.ui.movies.MoviesInteractor
 import com.arctouch.codechallenge.ui.movies.MoviesPresenter
 import com.arctouch.codechallenge.ui.movies.router.MoviesActivityRouter

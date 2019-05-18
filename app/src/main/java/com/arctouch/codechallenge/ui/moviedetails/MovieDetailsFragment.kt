@@ -45,7 +45,7 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
 
     override fun injectComponents() {
         DaggerMovieDetailsComponent.builder()
-                .mainComponent(getMainComponent())
+                .homeComponent(getMainComponent())
                 .movieDetailsModule(MovieDetailsModule())
                 .build()
                 .inject(this)

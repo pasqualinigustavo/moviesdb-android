@@ -1,7 +1,7 @@
 package com.arctouch.codechallenge.di.modules
 
 import android.app.Activity
-import com.arctouch.codechallenge.di.PerActivity
+import com.arctouch.codechallenge.di.annotations.PerActivity
 import dagger.Module
 import dagger.Provides
 

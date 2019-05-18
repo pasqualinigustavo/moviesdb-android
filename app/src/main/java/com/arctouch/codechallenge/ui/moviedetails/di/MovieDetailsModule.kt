@@ -1,6 +1,6 @@
 package com.arctouch.codechallenge.ui.moviedetails.di
 
-import com.arctouch.codechallenge.di.PerFragment
+import com.arctouch.codechallenge.di.annotations.PerFragment
 import com.arctouch.codechallenge.rest.APIComm
 import com.arctouch.codechallenge.ui.moviedetails.MovieDetailsInteractor
 import com.arctouch.codechallenge.ui.moviedetails.MovieDetailsPresenter

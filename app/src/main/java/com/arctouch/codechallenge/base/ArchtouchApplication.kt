@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.arctouch.codechallenge.di.ApplicationDependency
-import com.arctouch.codechallenge.di.components.ApplicationComponent
+import com.arctouch.codechallenge.di.components.AppComponent
 
 class ArchtouchApplication : MultiDexApplication() {
 
     private var instance: ArchtouchApplication? = null
-    lateinit var graph: ApplicationComponent
+    lateinit var graph: AppComponent
 
     companion object {
         var TAG = ArchtouchApplication.javaClass.canonicalName
@@ -27,7 +27,7 @@ class ArchtouchApplication : MultiDexApplication() {
         graph = ApplicationDependency().getApplicationComponent(this)
     }
 
-    fun getApplicationComponent(): ApplicationComponent {
+    fun getApplicationComponent(): AppComponent {
         return graph
     }
 

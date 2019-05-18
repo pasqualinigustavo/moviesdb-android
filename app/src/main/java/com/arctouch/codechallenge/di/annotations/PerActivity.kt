@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.di
+package com.arctouch.codechallenge.di.annotations
 
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy.RUNTIME

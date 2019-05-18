@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.di
+package com.arctouch.codechallenge.di.annotations
 
 import javax.inject.Scope
 

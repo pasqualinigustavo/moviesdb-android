@@ -1,9 +1,9 @@
-package com.arctouch.codechallenge.ui.home.router
+package com.arctouch.codechallenge.activities.home.router
 
 import androidx.navigation.Navigation
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.model.Movie
-import com.arctouch.codechallenge.ui.home.HomeActivity
+import com.arctouch.codechallenge.activities.home.HomeActivity
 import com.arctouch.codechallenge.ui.movies.MoviesFragmentDirections
 
 class HomeNavigator(private val activity: HomeActivity) {
