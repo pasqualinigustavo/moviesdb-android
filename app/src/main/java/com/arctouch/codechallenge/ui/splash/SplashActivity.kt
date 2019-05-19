@@ -1,6 +1,7 @@
 package com.arctouch.codechallenge.ui.splash
 
 import android.os.Bundle
+import android.view.Window
 import android.widget.Toast
 import com.archtouch.codechallenge.splash.SplashView
 import com.archtouch.codechallenge.splash.di.DaggerSplashComponent
@@ -27,13 +28,26 @@ class SplashActivity : BaseActivity(R.layout.splash_activity), SplashView {
     @Inject
     lateinit var presenter: SplashPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.splash_activity)
-        component.inject(this)
-
+    override fun initComponents() {
         presenter.attachView(this)
         presenter.init()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        window.requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun initData() {
+
+    }
+
+    override fun injectComponents() {
+        component.inject(this)
+    }
+
+    override fun initListeners() {
+
     }
 
     override fun showError(message: String) {

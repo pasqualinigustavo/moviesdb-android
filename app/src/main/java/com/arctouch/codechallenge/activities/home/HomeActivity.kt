@@ -10,20 +10,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.base.AbstractActivity
-import com.arctouch.codechallenge.base.ArchtouchApplication
-import com.arctouch.codechallenge.base.interfaces.ActivityToolbarBehaviour
-import com.arctouch.codechallenge.di.components.AppComponent
 import com.arctouch.codechallenge.activities.home.di.DaggerHomeComponent
 import com.arctouch.codechallenge.activities.home.di.HomeComponent
 import com.arctouch.codechallenge.activities.home.di.HomeModule
+import com.arctouch.codechallenge.base.BaseActivity
+import com.arctouch.codechallenge.base.interfaces.ActivityToolbarBehaviour
 import kotlinx.android.synthetic.main.actionbar.*
 import javax.inject.Inject
 
-class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBehaviour, HomeView {
-
-    protected val appComponent: AppComponent
-        get() = (application as ArchtouchApplication).getApplicationComponent()
+class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehaviour, HomeView {
 
     @Inject
     lateinit var presenter: HomePresenter
@@ -43,7 +38,6 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
     }
 
     override fun initComponents() {
-        component.inject(this)
         presenter.attachView(this)
         navController = Navigation.findNavController(this, R.id.nav_host)
         appBarConfiguration = AppBarConfiguration(navController.graph, null)
@@ -62,7 +56,7 @@ class HomeActivity : AbstractActivity(R.layout.activity_main), ActivityToolbarBe
     }
 
     override fun injectComponents() {
-
+        component.inject(this)
     }
 
     override fun onDestroy() {
