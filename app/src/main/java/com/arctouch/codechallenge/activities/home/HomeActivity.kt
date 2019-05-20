@@ -7,7 +7,6 @@ import android.view.Window
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.activities.home.di.DaggerHomeComponent
@@ -17,6 +16,7 @@ import com.arctouch.codechallenge.base.BaseActivity
 import com.arctouch.codechallenge.base.interfaces.ActivityToolbarBehaviour
 import kotlinx.android.synthetic.main.actionbar.*
 import javax.inject.Inject
+
 
 class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehaviour, HomeView {
 
@@ -102,7 +102,11 @@ class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehavi
         }
     }
 
+    override fun onBackPressed() {
+        backClicked(navController, appBarConfiguration)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        return this.onSupportNavigateUp(navController, appBarConfiguration, false)
     }
 }
