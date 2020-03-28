@@ -53,11 +53,12 @@ class MoviesDBApplication : MultiDexApplication(), LifecycleDelegate {
         this.initializeInjector()
         graph.inject(null)
 
-        val lifeCycleHandler = AppLifecycleHandler(this)
-        registerLifecycleHandler(lifeCycleHandler)
         // Context
         appContext = applicationContext
         instance = this
+
+        val lifeCycleHandler = AppLifecycleHandler(this)
+        registerLifecycleHandler(lifeCycleHandler)
     }
 
     override fun onTrimMemory(level: Int) {

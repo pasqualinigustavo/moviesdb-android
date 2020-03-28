@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviesdb.R
+import com.moviesdb.base.MoviesDBConstants
 import com.moviesdb.model.Movie
+import com.moviesdb.model.interfaces.IAdapterDataSource
 import com.moviesdb.ui.BaseFragment
+import com.moviesdb.ui.movies.adapter.MovieAdapter
 import com.moviesdb.ui.movies.di.DaggerUpcomingMoviesComponent
 import com.moviesdb.ui.movies.di.UpcomingMoviesModule
 import kotlinx.android.synthetic.main.fragment_upcoming_movies.*
@@ -33,7 +36,7 @@ class UpcomingMoviesFragment : BaseFragment(), UpcomingMoviesView {
     lateinit var presenter: UpcomingMoviesPresenter
     private var currentDataSetPage = 1L
     private var overallYScroll = 0
-    //var adapter: ContractAdapter? = null
+    var adapter: MovieAdapter? = null
 
     override fun injectComponents() {
         DaggerUpcomingMoviesComponent.builder()
@@ -104,38 +107,44 @@ class UpcomingMoviesFragment : BaseFragment(), UpcomingMoviesView {
     }
 
     private fun initAdapter(movies: List<Movie>?) {
-//        if (context == null) return
-//        if (fragment_upcoming_movies__swiperefresh == null || fragment_upcoming_movies__swiperefresh == null)
-//            return
-//        if (contracts != null && !contracts.isEmpty()) {
-//            if (currentDataSetPage == 1 || adapter == null) {
-//                adapter = ContractAdapter()
-//                adapter?.items = contracts.toMutableList()
-//                adapter?.clickEvent?.subscribe{
-//                        if (it != null)
-//                            presenter.showContractDetails(it)
-//                    }
-//
-//                fragment_upcoming_movies.adapter = adapter
-//                fragment_upcoming_movies__swiperefresh.visibility = View.VISIBLE
-//                fragment_contracts__textview_noinfo.visibility = View.GONE
-//                if (contracts.size < VeloConstants.LIST_ITEM_ITEMS_PER_PAGE)
-//                    adapter?.setHasMoreData(false)
-//            } else {
-//                if (contracts == null || contracts.size == 0)
-//                    adapter?.setHasMoreData(false)
-//                else {
-//                    overallYScroll = contracts?.size
-//                    if (contracts.size < VeloConstants.LIST_ITEM_ITEMS_PER_PAGE)
-//                        adapter?.setHasMoreData(false)
-//                    adapter?.addMoreItemsToDateSet(contracts.toMutableList())
-//                }
-//            }
-//        } else {
-//            adapter = null
-//            fragment_upcoming_movies__swiperefresh.visibility = View.GONE
-//            fragment_contracts__textview_noinfo.visibility = View.VISIBLE
-//        }
+        context?.let { ctx ->
+            if (fragment_upcoming_movies__swiperefresh == null || fragment_upcoming_movies__swiperefresh == null)
+                return
+            if (movies != null && !movies.isEmpty()) {
+                if (currentDataSetPage == 1L || adapter == null) {
+                    adapter = MovieAdapter(ctx)
+                    adapter?.items = movies.toMutableList()
+                    adapter?.setAdapterInteractionListener(object : IAdapterDataSource {
+                        override fun adapterUserWantsLoadMoreData(apadter: RecyclerView.Adapter<*>?) {
+                            currentDataSetPage++
+                            presenter.getUpcomingMovies(currentDataSetPage)
+                        }
+                    })
+                    adapter?.clickEvent?.subscribe {
+                        if (it != null)
+                            presenter.showMovieDetails(it)
+                    }
+
+                    fragment_upcoming_movies__recyclerview.adapter = adapter
+                    fragment_upcoming_movies__swiperefresh.visibility = View.VISIBLE
+                    if (movies.size < MoviesDBConstants.LIST_ITEM_ITEMS_PER_PAGE) {
+                        adapter?.setHasMoreData(false)
+                    } else adapter?.setHasMoreData(true)
+                } else {
+                    if (movies == null || movies.size == 0)
+                        adapter?.setHasMoreData(false)
+                    else {
+                        overallYScroll = movies?.size
+                        if (movies.size < MoviesDBConstants.LIST_ITEM_ITEMS_PER_PAGE)
+                            adapter?.setHasMoreData(false)
+                        adapter?.addMoreItemsToDateSet(movies.toMutableList())
+                    }
+                }
+            } else {
+                adapter = null
+                fragment_upcoming_movies__swiperefresh.visibility = View.GONE
+            }
+        }
     }
 
     override fun showError(message: String?) {

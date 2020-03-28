@@ -48,7 +48,6 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
         movie?.let {
 
         }
-        //loadStates()
     }
 
     override fun onCreateView(
@@ -68,10 +67,9 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
     override fun initComponent(view: View?, savedInstanceState: Bundle?) {
         Log.d(TAG, "initComponents")
 
-        //movie = getArguments()?.getParcelable<Movie?>(ARG_MOVIE)
+        movie = getArguments()?.getParcelable<Movie?>(ARG_MOVIE)
         presenter.bindView(this)
-        //setToolbarTitle(movie?.title)
-        setHasOptionsMenu(true)
+        movie?.title?.let { setToolbarTitle(it) }
     }
 
     override fun showError(message: String?) {
