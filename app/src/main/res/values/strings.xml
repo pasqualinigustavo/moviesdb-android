@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Code Challenge</string>
     <string name="movie_and_genres">%s - %s</string>
+
+    <!--UpcomingMoviesFragment-->
+    <string name="fragment_upcoming_movies__lbl_title">Upcoming Movies</string>
+
+    <!--MESSAGES-->
+    <string name="message_close_app">Clique novamente para fechar...</string>
+
+    <!-- COMMON -->
+    <string name="label_please_wait">Aguarde...</string>
 </resources>
