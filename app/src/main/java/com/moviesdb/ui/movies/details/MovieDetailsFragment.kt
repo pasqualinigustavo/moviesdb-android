@@ -8,11 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.moviesdb.R
 import com.moviesdb.model.Movie
+import com.moviesdb.rest.endpoint.request.MovieImageUrlBuilder
 import com.moviesdb.ui.BaseFragment
 import com.moviesdb.ui.movies.details.di.DaggerMovieDetailsComponent
 import com.moviesdb.ui.movies.details.di.MovieDetailsModule
+import kotlinx.android.synthetic.main.fragment_movie_details.*
 import javax.inject.Inject
 
 
@@ -36,6 +40,7 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
     @Inject
     lateinit var presenter: MovieDetailsPresenter
     var movie: Movie? = null
+    private val movieImageUrlBuilder = MovieImageUrlBuilder()
 
     override fun injectComponents() {
         DaggerMovieDetailsComponent.builder()
@@ -61,7 +66,18 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
     }
 
     override fun initListeners() {
+        context?.let { ctx ->
+            movie?.let {
+                fragment_movie_details__textview_title.text = it.title
+                fragment_movie_details__textview_genre.text = it.genres?.joinToString(separator = ", ") { it.name }
+                fragment_movie_details__textview_releasedate.text = it.releaseDate
 
+                Glide.with(ctx)
+                        .load(it.posterPath?.let { movieImageUrlBuilder.buildPosterUrl(it) })
+                        .apply(RequestOptions().placeholder(R.drawable.ic_image_placeholder))
+                        .into(fragment_movie_details__imageview_poster)
+            }
+        }
     }
 
     override fun initComponent(view: View?, savedInstanceState: Bundle?) {

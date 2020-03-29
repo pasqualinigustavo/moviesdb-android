@@ -21,6 +21,9 @@
             android:id="@+id/fragment_upcoming_movies__recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="4dp"
             android:visibility="visible"
             tools:listitem="@layout/row_movie" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
