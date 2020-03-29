@@ -131,10 +131,8 @@ class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehavi
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val fragments = supportFragmentManager.fragments
-        if (fragments != null) {
-            for (item in fragments) {
-                item?.onActivityResult(requestCode, resultCode, data)
-            }
+        for (item in fragments) {
+            item?.onActivityResult(requestCode, resultCode, data)
         }
     }
 

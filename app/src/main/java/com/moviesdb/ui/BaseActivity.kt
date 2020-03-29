@@ -7,15 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.Theme
 import com.moviesdb.R
 import com.moviesdb.application.MoviesDBApplication
 import com.moviesdb.di.components.AppComponent
-import com.moviesdb.model.interfaces.ActivityBehaviour
 import java.util.*
 
-abstract class BaseActivity : AppCompatActivity, ActivityBehaviour {
+abstract class BaseActivity : AppCompatActivity {
 
     protected val TAG: String
     protected val appComponent: AppComponent
@@ -24,7 +21,6 @@ abstract class BaseActivity : AppCompatActivity, ActivityBehaviour {
     private var tryToClose: Date? = null
     private var blockOnBackPress = false
     protected var layoutId: Int = 0
-    protected var progressDialog: MaterialDialog? = null
     protected var questionBeforeClose = true
 
     constructor(layoutId: Int) : super() {
@@ -61,34 +57,6 @@ abstract class BaseActivity : AppCompatActivity, ActivityBehaviour {
         if (navHostFragment?.getChildFragmentManager() != null)
             return navHostFragment.getChildFragmentManager().backStackEntryCount > 0
         return false
-    }
-
-    override fun showProgressBar() {
-        progressDialog?.let {
-            if (!it.isShowing)
-                createDialog()
-        }
-        if (progressDialog == null) {
-            createDialog()
-        }
-    }
-
-    private fun createDialog(): MaterialDialog? {
-        val b = MaterialDialog.Builder(this)
-        b.title(R.string.app_name)
-        b.cancelable(false)
-        b.theme(Theme.LIGHT)
-        b.content(R.string.label_please_wait)
-        b.progress(true, 0)
-        progressDialog = b.show()
-        return progressDialog
-    }
-
-    override fun hideProgressBar() {
-        progressDialog?.let {
-            progressDialog?.dismiss()
-            progressDialog = null
-        }
     }
 
     override fun setTitle(@StringRes title: Int) {

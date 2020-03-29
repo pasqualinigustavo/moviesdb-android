@@ -50,10 +50,8 @@ constructor(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (items != null) {
-            if (items.size > 0 && items.size == position)
-                return VIEW_TYPE_LOADING
-        }
+        if (items.size > 0 && items.size == position)
+            return VIEW_TYPE_LOADING
         return VIEW_TYPE_ITEM
     }
 
@@ -68,7 +66,7 @@ constructor(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder
                 userWantsLoadMore(loadViewHolder.progressBar)
             }
         } else if (holder is RecyclerViewAdapterViewHolder) {
-            val itemRowHolder = holder as RecyclerViewAdapterViewHolder
+            val itemRowHolder = holder
             val entity = items[position]
 
             itemRowHolder.titleTextView.text = entity.title
@@ -83,7 +81,7 @@ constructor(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun getItemCount(): Int {
-        if (items != null && items.size > 0) {
+        if (items.size > 0) {
             if (hasMoreData && adapterInteractionListener != null)
                 return items.size + 1
             else return items.size
