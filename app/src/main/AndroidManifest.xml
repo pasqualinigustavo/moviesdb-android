@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name="com.moviesdb.activities.home.HomeActivity"
+            android:name="com.moviesdb.ui.home.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.NoActionBar"

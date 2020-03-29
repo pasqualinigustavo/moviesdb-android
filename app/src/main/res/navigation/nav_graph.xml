@@ -16,6 +16,6 @@
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.moviesdb.ui.moviedetails.MovieDetailsFragment"
+        android:name="com.moviesdb.ui.movies.details.MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details"></fragment>
 </navigation>
