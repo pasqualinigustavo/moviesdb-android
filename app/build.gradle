@@ -19,10 +19,31 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('moviesdb.jks')
+            storePassword "moviesdb@2020"
+            keyAlias "moviesdb"
+            keyPassword "moviesdb@2020"
+        }
+        debug {
+            storeFile file('moviesdb.jks')
+            storePassword "moviesdb@2020"
+            keyAlias "moviesdb"
+            keyPassword "moviesdb@2020"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            debuggable true
+            signingConfig signingConfigs.debug
         }
     }
 
