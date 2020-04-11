@@ -45,4 +45,4 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          path: app/release/app-debug.apk
+          path: app/release/app-release.apk
