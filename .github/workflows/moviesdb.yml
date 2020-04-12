@@ -1,4 +1,4 @@
-name: Android Custom Actions (CI)
+name: Automated Jobs (Android - CI)
 
 on:
   pull_request:
