@@ -1,15 +1,30 @@
 package com.moviesdb.di.components
 
-import android.content.Context
+import android.app.Application
+import com.moviesdb.application.MoviesDBApplication
 import com.moviesdb.di.modules.AppModule
+import com.moviesdb.ui.home.di.MainActivityModule
+import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class])
+@Component(
+        modules = [
+            AppModule::class,
+            MainActivityModule::class,
+            AndroidInjectionModule::class]
+)
 interface AppComponent {
+    @Component.Builder
+    interface Builder {
 
-    fun context(): Context
+        @BindsInstance
+        fun application(application: Application): Builder
 
-    fun inject(holder: ComponentHolder?)
+        fun build(): AppComponent
+    }
+
+    fun inject(app: MoviesDBApplication)
 }

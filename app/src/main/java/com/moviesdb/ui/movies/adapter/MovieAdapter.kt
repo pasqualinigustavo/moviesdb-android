@@ -116,6 +116,12 @@ constructor(val context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged()
     }
 
+    fun addElements(newElements: List<Movie>) {
+        val lastIndex = items.size
+        items.addAll(newElements)
+        notifyItemRangeInserted(lastIndex, newElements.size)
+    }
+
     internal class LoadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val progressBar = view.row_load_more_progress_bar
     }

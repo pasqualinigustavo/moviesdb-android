@@ -1,9 +1,8 @@
 package com.moviesdb.rest
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.moviesdb.rest.endpoint.TmdbApi
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -49,7 +48,6 @@ class APIComm @Inject constructor() {
 
     lateinit var mRetrofit: Retrofit
     lateinit var mHttpClient: OkHttpClient
-    lateinit var gson: Gson
     private val mServicesPool = HashMap<String, Any?>()
 
     companion object : RetrofitInit<APIComm>(::APIComm)
@@ -66,22 +64,17 @@ class APIComm @Inject constructor() {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor).build()
 
-        // GSON Parser
-        gson = GsonBuilder()
-                .create()
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory())
+                .build()
 
         // Build the retrofit object
         mRetrofit = Retrofit.Builder()
                 .baseUrl(RetrofitInit.URL)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .client(mHttpClient)
                 .build()
 
-    }
-
-    fun gson(): Gson {
-        return gson
     }
 
     fun <Any> create(service: Class<Any>): kotlin.Any? {

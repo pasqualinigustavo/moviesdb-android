@@ -5,52 +5,44 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.navigation.NavigationView
 import com.moviesdb.R
+import com.moviesdb.di.Injectable
 import com.moviesdb.model.interfaces.ActivityToolbarBehaviour
 import com.moviesdb.ui.BaseActivity
-import com.moviesdb.ui.home.di.DaggerHomeComponent
-import com.moviesdb.ui.home.di.HomeComponent
-import com.moviesdb.ui.home.di.HomeModule
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.actionbar.*
 import javax.inject.Inject
 
-class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehaviour, HomeView,
-        NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehaviour,
+        NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector, Injectable {
 
-    @Inject
-    lateinit var presenter: HomePresenter
+    //    @Inject
+//    lateinit var presenter: HomePresenter
     private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     companion object {
         val TAG = HomeActivity::class.java.simpleName
     }
 
-    val component: HomeComponent by lazy {
-        DaggerHomeComponent.builder()
-                .parent(appComponent)
-                .module(HomeModule())
-                .target(this)
-                .build()
-    }
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     override fun initComponents() {
-        presenter.bindView(this)
+//        presenter.bindView(this)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         createActionBar()
         initNavigation()
         navController = Navigation.findNavController(this, R.id.nav_host)
 
-        setupWithNavController(toolbar, navController)
+        //setupWithNavController(toolbar, navController)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,19 +51,6 @@ class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehavi
     }
 
     override fun initData() {
-    }
-
-    override fun showError(message: String?) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun injectComponents() {
-        component.inject(this)
-    }
-
-    override fun onDestroy() {
-        presenter.unbindView()
-        super.onDestroy()
     }
 
     override fun setToolbarTitle(title: String) {
@@ -96,10 +75,10 @@ class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehavi
         //nav_view.setNavigationItemSelectedListener(this)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return item.onNavDestinationSelected(findNavController(R.id.nav_host))
-                || super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return item.onNavDestinationSelected(findNavController(R.id.nav_host))
+//                || super.onOptionsItemSelected(item)
+//    }
 
     fun displayHomeUp() {
         val isRoot = !this.hasBackStack()
@@ -133,9 +112,9 @@ class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehavi
         return true
     }
 
-    override fun onBackPressed() {
-        backClicked(navController, appBarConfiguration)
-    }
+//    override fun onBackPressed() {
+//        backClicked(navController, appBarConfiguration)
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

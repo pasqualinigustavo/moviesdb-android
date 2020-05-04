@@ -14,8 +14,6 @@ import com.moviesdb.R
 import com.moviesdb.model.Movie
 import com.moviesdb.rest.endpoint.request.MovieImageUrlBuilder
 import com.moviesdb.ui.BaseFragment
-import com.moviesdb.ui.movies.details.di.DaggerMovieDetailsComponent
-import com.moviesdb.ui.movies.details.di.MovieDetailsModule
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import javax.inject.Inject
 
@@ -41,13 +39,6 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
     lateinit var presenter: MovieDetailsPresenter
     var movie: Movie? = null
     private val movieImageUrlBuilder = MovieImageUrlBuilder()
-
-    override fun injectComponents() {
-        DaggerMovieDetailsComponent.builder()
-                .movieDetailsModule(MovieDetailsModule())
-                .build()
-                .inject(this)
-    }
 
     override fun initData() {
         movie?.let {

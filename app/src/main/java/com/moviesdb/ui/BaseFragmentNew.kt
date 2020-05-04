@@ -1,23 +1,21 @@
 package com.moviesdb.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.moviesdb.di.Injectable
 import com.moviesdb.model.interfaces.ActivityToolbarBehaviour
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragmentNew<ViewModel : BaseViewModel> : Fragment(), Injectable {
 
     var activityToolbarBehaviour: ActivityToolbarBehaviour? = null
 
-//    @Inject
-//    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +35,17 @@ abstract class BaseFragment : Fragment() {
 //        loading = view.findViewById(R.id.progress_bar)
 //        notificationLayout = view.findViewById(R.id.notification_layout)
 //
-//        viewModel = createViewModel()
+        viewModel = createViewModel()
 //        viewModel.navigator.observeEvents(this, navController())
 //        viewModel.params.value = arguments?.getSerializable(NavigationController.DATA_KEY)
 //        viewModel.loading.observe(viewLifecycleOwner, Observer { showProgressBar(it) })
 //        viewModel.recoverableError.observe(viewLifecycleOwner, Observer { showRecoverableError(it) })
-//        viewModel.onAttached()
+        viewModel.onAttached()
 
         //hideKeyboard()
     }
+
+    abstract fun createViewModel(): ViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -65,15 +65,9 @@ abstract class BaseFragment : Fragment() {
 
     protected fun init(savedInstanceState: Bundle?) {
         this.initComponent(this.view, savedInstanceState)
-        this.initData()
-        this.initListeners()
     }
 
     protected abstract fun initComponent(view: View?, savedInstanceState: Bundle?)
-
-    protected abstract fun initListeners()
-
-    protected abstract fun initData()
 
     protected fun setToolbarTitle(title: String) {
         this.activityToolbarBehaviour?.setToolbarTitle(title)

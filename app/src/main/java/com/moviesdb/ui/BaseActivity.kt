@@ -1,22 +1,14 @@
 package com.moviesdb.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import com.moviesdb.R
-import com.moviesdb.application.MoviesDBApplication
-import com.moviesdb.di.components.AppComponent
 import java.util.*
 
 abstract class BaseActivity : AppCompatActivity {
 
     protected val TAG: String
-    protected val appComponent: AppComponent
-        get() = (application as MoviesDBApplication).getApplicationComponent()
 
     private var tryToClose: Date? = null
     private var blockOnBackPress = false
@@ -35,8 +27,6 @@ abstract class BaseActivity : AppCompatActivity {
 
     protected abstract fun initListeners()
 
-    protected abstract fun injectComponents()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(this.layoutId)
@@ -46,7 +36,6 @@ abstract class BaseActivity : AppCompatActivity {
 
     protected fun init() {
         this.blockOnBackPress = false
-        this.injectComponents()
         this.initComponents()
         this.initListeners()
         this.initData()
@@ -64,51 +53,51 @@ abstract class BaseActivity : AppCompatActivity {
         supportActionBar?.setTitle(title)
     }
 
-    fun backClicked(navController: NavController, appBarConfiguration: AppBarConfiguration) {
-        onSupportNavigateUp(navController, appBarConfiguration, true)
-    }
+//    fun backClicked(navController: NavController, appBarConfiguration: AppBarConfiguration) {
+//        onSupportNavigateUp(navController, appBarConfiguration, true)
+//    }
 
-    fun onSupportNavigateUp(
-            navController: NavController,
-            appBarConfiguration: AppBarConfiguration,
-            onBackPressed: Boolean
-    ): Boolean {
-        if (this.blockOnBackPress) {
-            return false
-        }
-
-        if (!questionBeforeClose) {
-            if (!onBackPressed)
-                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-            else super.onBackPressed()
-        }
-
-        if (this.hasBackStack()) {
-            if (!onBackPressed)
-                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-            else {
-                super.onBackPressed()
-                return false
-            }
-        }
-
-        if (this.tryToClose != null) {
-            val tryToCloseAgain = Date()
-            val diff = tryToCloseAgain.time - tryToClose!!.time
-            val diffSec = diff / 1000
-
-            if (diffSec > 1) {
-                this.tryToClose = null
-            } else {
-                if (!onBackPressed)
-                    return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-                else super.onBackPressed()
-            }
-        }
-
-        this.tryToClose = Date()
-        Toast.makeText(this, getString(R.string.message_close_app), Toast.LENGTH_SHORT).show()
-        return false
-    }
+//    fun onSupportNavigateUp(
+//            navController: NavController,
+//            appBarConfiguration: AppBarConfiguration,
+//            onBackPressed: Boolean
+//    ): Boolean {
+//        if (this.blockOnBackPress) {
+//            return false
+//        }
+//
+//        if (!questionBeforeClose) {
+//            if (!onBackPressed)
+//                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+//            else super.onBackPressed()
+//        }
+//
+//        if (this.hasBackStack()) {
+//            if (!onBackPressed)
+//                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+//            else {
+//                super.onBackPressed()
+//                return false
+//            }
+//        }
+//
+//        if (this.tryToClose != null) {
+//            val tryToCloseAgain = Date()
+//            val diff = tryToCloseAgain.time - tryToClose!!.time
+//            val diffSec = diff / 1000
+//
+//            if (diffSec > 1) {
+//                this.tryToClose = null
+//            } else {
+//                if (!onBackPressed)
+//                    return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+//                else super.onBackPressed()
+//            }
+//        }
+//
+//        this.tryToClose = Date()
+//        Toast.makeText(this, getString(R.string.message_close_app), Toast.LENGTH_SHORT).show()
+//        return false
+//    }
 }
 

@@ -1,5 +1,6 @@
 package com.moviesdb.ui.splash
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Window
 import android.widget.Toast
@@ -9,6 +10,7 @@ import com.moviesdb.splash.di.DaggerSplashComponent
 import com.moviesdb.splash.di.SplashComponent
 import com.moviesdb.splash.di.SplashModule
 import com.moviesdb.ui.BaseActivity
+import com.moviesdb.ui.home.HomeActivity
 import javax.inject.Inject
 
 class SplashActivity : BaseActivity(R.layout.activity_splash), SplashView {
@@ -17,19 +19,11 @@ class SplashActivity : BaseActivity(R.layout.activity_splash), SplashView {
         val TAG: String = SplashActivity::class.java.simpleName
     }
 
-    val component: SplashComponent by lazy {
-        DaggerSplashComponent.builder()
-                .parent(appComponent)
-                .module(SplashModule())
-                .target(this)
-                .build()
-    }
-
-    @Inject
-    lateinit var presenter: SplashPresenter
+//    @Inject
+//    lateinit var presenter: SplashPresenter
 
     override fun initComponents() {
-        presenter.bindView(this)
+//        presenter.bindView(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +32,12 @@ class SplashActivity : BaseActivity(R.layout.activity_splash), SplashView {
     }
 
     override fun initData() {
-        presenter.loadGenres()
-    }
+//        presenter.loadGenres()
 
-    override fun injectComponents() {
-        component.inject(this)
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME)
+        startActivity(intent)
+        finish()
     }
 
     override fun initListeners() {
@@ -55,6 +50,6 @@ class SplashActivity : BaseActivity(R.layout.activity_splash), SplashView {
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.unbindView()
+//        presenter.unbindView()
     }
 }

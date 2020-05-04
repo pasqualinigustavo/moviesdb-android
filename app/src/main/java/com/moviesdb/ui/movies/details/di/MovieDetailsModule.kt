@@ -7,16 +7,16 @@ import com.moviesdb.ui.movies.details.MovieDetailsPresenter
 import dagger.Module
 import dagger.Provides
 
-@Module
-class MovieDetailsModule {
-
-    @Provides
-    @PerFragment
-    fun presenter(interactor: MovieDetailsInteractor) =
-            MovieDetailsPresenter(interactor)
-
-    @Provides
-    @PerFragment
-    fun interactor(apiComm: APIComm) = MovieDetailsInteractor(apiComm)
-
-}
+//@Module
+//class MovieDetailsModule {
+//
+//    @Provides
+//    @PerFragment
+//    fun presenter(interactor: MovieDetailsInteractor) =
+//            MovieDetailsPresenter(interactor)
+//
+//    @Provides
+//    @PerFragment
+//    fun interactor(apiComm: APIComm) = MovieDetailsInteractor(apiComm)
+//
+//}

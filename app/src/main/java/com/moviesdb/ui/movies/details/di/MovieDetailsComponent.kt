@@ -4,11 +4,11 @@ import com.moviesdb.di.annotations.PerFragment
 import com.moviesdb.ui.movies.details.MovieDetailsFragment
 import dagger.Component
 
-@PerFragment
-@Component(
-        modules = arrayOf(MovieDetailsModule::class)
-)
-interface MovieDetailsComponent {
-
-    fun inject(target: MovieDetailsFragment)
-}
+//@PerFragment
+//@Component(
+//        modules = arrayOf(MovieDetailsModule::class)
+//)
+//interface MovieDetailsComponent {
+//
+//    fun inject(target: MovieDetailsFragment)
+//}

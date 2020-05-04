@@ -2,47 +2,23 @@ package com.moviesdb.application
 
 import android.app.Activity
 import android.app.Application
-import android.content.ComponentCallbacks2
 import android.content.Context
-import android.content.res.Configuration
-import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.multidex.MultiDex
-import androidx.multidex.MultiDexApplication
-import com.moviesdb.di.ApplicationDependency
-import com.moviesdb.di.components.AppComponent
-import com.moviesdb.model.interfaces.LifecycleDelegate
+import com.moviesdb.di.AppInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import javax.inject.Inject
 
-class MoviesDBApplication : MultiDexApplication(), LifecycleDelegate {
+class MoviesDBApplication : Application(), HasActivityInjector {
 
     private var instance: MoviesDBApplication? = null
-    lateinit var graph: AppComponent
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     companion object {
         var TAG = MoviesDBApplication.javaClass.canonicalName
         lateinit var appContext: Context
-    }
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        MultiDex.install(this)
-    }
-
-    private fun initializeInjector() {
-        graph = ApplicationDependency().getApplicationComponent(this)
-    }
-
-    fun getApplicationComponent(): AppComponent {
-        return graph
-    }
-
-    override fun onAppBackgrounded() {
-        Log.d(TAG, "App in background")
-    }
-
-    override fun onAppForegrounded() {
-        Log.d(TAG, "App in foreground")
     }
 
     override fun onCreate() {
@@ -50,15 +26,11 @@ class MoviesDBApplication : MultiDexApplication(), LifecycleDelegate {
         super.onCreate()
         instance = this
 
-        this.initializeInjector()
-        graph.inject(null)
-
         // Context
         appContext = applicationContext
         instance = this
 
-        val lifeCycleHandler = AppLifecycleHandler(this)
-        registerLifecycleHandler(lifeCycleHandler)
+        AppInjector.init(this)
     }
 
     override fun onTrimMemory(level: Int) {
@@ -88,59 +60,6 @@ class MoviesDBApplication : MultiDexApplication(), LifecycleDelegate {
 
     }
 
-    private fun registerLifecycleHandler(lifeCycleHandler: AppLifecycleHandler) {
-        registerActivityLifecycleCallbacks(lifeCycleHandler)
-        registerComponentCallbacks(lifeCycleHandler)
-    }
-
-    internal inner class AppLifecycleHandler(private val lifecycleDelegate: LifecycleDelegate) : Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {
-
-        private var appInForeground = false
-
-        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-
-        }
-
-        override fun onActivityStarted(activity: Activity) {
-
-        }
-
-        override fun onActivityResumed(activity: Activity) {
-            if (!appInForeground) {
-                appInForeground = true
-                lifecycleDelegate.onAppForegrounded()
-            }
-        }
-
-        override fun onActivityPaused(activity: Activity) {
-
-        }
-
-        override fun onActivityStopped(activity: Activity) {
-
-        }
-
-        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-
-        }
-
-        override fun onActivityDestroyed(activity: Activity) {
-
-        }
-
-        override fun onTrimMemory(level: Int) {
-            if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
-                appInForeground = false
-                lifecycleDelegate.onAppBackgrounded()
-            }
-        }
-
-        override fun onConfigurationChanged(newConfig: Configuration) {
-
-        }
-
-        override fun onLowMemory() {
-
-        }
-    }
+    override
+    fun activityInjector() = dispatchingAndroidInjector
 }
