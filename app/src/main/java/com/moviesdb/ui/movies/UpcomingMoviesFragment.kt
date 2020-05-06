@@ -38,9 +38,10 @@ class UpcomingMoviesFragment : BaseFragment<UpcomingMoviesViewModel>(), Injectab
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(false)
+        setToolbarTitle(getString(R.string.fragment_upcoming_movies__lbl_title))
 
         setupRecyclerView()
-        setupObservers()
     }
 
     private fun setupRecyclerView() {
@@ -83,7 +84,7 @@ class UpcomingMoviesFragment : BaseFragment<UpcomingMoviesViewModel>(), Injectab
         }
     }
 
-    private fun setupObservers() {
+    override fun setupObservers() {
         viewModel.onItemsData.value = emptyList()
         viewModel.onItemsData.observe(
                 viewLifecycleOwner,
@@ -92,8 +93,8 @@ class UpcomingMoviesFragment : BaseFragment<UpcomingMoviesViewModel>(), Injectab
                     fragment_upcoming_movies__recyclerview.visibility = View.VISIBLE
                     fragment_upcoming_movies__textview_nodata.visibility = View.GONE
                     if (it.size < MoviesDBConstants.LIST_ITEM_ITEMS_PER_PAGE)
-                        (fragment_upcoming_movies__recyclerview.adapter as? MovieAdapter)?.setHasMoreData(true)
-                    else (fragment_upcoming_movies__recyclerview.adapter as? MovieAdapter)?.setHasMoreData(false)
+                        (fragment_upcoming_movies__recyclerview.adapter as? MovieAdapter)?.setHasMoreData(false)
+                    else (fragment_upcoming_movies__recyclerview.adapter as? MovieAdapter)?.setHasMoreData(true)
                 }
         )
 
@@ -117,12 +118,6 @@ class UpcomingMoviesFragment : BaseFragment<UpcomingMoviesViewModel>(), Injectab
                     fragment_upcoming_movies__textview_nodata.visibility = View.VISIBLE
                 }
         )
-    }
-
-    override fun initComponent(view: View?, savedInstanceState: Bundle?) {
-        Log.d(TAG, "initComponents")
-        setHasOptionsMenu(false)
-        setToolbarTitle(getString(R.string.fragment_upcoming_movies__lbl_title))
     }
 
     override fun createViewModel(): UpcomingMoviesViewModel {

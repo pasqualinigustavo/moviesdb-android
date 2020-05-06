@@ -29,6 +29,7 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), Injectable 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = createViewModel()
+        setupObservers()
         viewModel.navigator.observeEvents(this, navController())
         viewModel.params.value = arguments?.getSerializable(NavigationController.DATA_KEY)
 //        viewModel.errorHandler.observe(
@@ -40,7 +41,6 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), Injectable 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        init(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(
                 viewLifecycleOwner,
                 object : OnBackPressedCallback(true) {
@@ -62,11 +62,7 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), Injectable 
 
     abstract fun createViewModel(): ViewModel
 
-    protected fun init(savedInstanceState: Bundle?) {
-        this.initComponent(this.view, savedInstanceState)
-    }
-
-    protected abstract fun initComponent(view: View?, savedInstanceState: Bundle?)
+    protected abstract fun setupObservers()
 
     protected fun setToolbarTitle(title: String) {
         this.activityToolbarBehaviour?.setToolbarTitle(title)

@@ -36,19 +36,13 @@ class MovieDetailsFragment : BaseFragment<MovieDetailsViewModel>(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupObservers()
+        setHasOptionsMenu(false)
     }
 
     private val movieImageUrlBuilder = MovieImageUrlBuilder()
 
-    private fun setupObservers() {
+    override fun setupObservers() {
         viewModel.basketPayables.observe(viewLifecycleOwner, Observer { showMovie(it) })
-    }
-
-    override fun initComponent(view: View?, savedInstanceState: Bundle?) {
-        Log.d(TAG, "initComponents")
-        setHasOptionsMenu(false)
     }
 
     override fun createViewModel(): MovieDetailsViewModel {
