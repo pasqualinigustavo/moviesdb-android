@@ -7,58 +7,59 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.moviesdb.R
+import com.moviesdb.di.Injectable
 import com.moviesdb.model.Movie
 import com.moviesdb.rest.endpoint.request.MovieImageUrlBuilder
 import com.moviesdb.ui.BaseFragment
+import com.moviesdb.ui.movies.UpcomingMoviesFragment
 import kotlinx.android.synthetic.main.fragment_movie_details.*
-import javax.inject.Inject
 
 
 /**
  * @author Gustavo Pasqualini
  */
 
-class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
+class MovieDetailsFragment : BaseFragment<MovieDetailsViewModel>(), Injectable {
 
     companion object {
-        val TAG = MovieDetailsFragment::class.java.simpleName
-        private const val ARG_MOVIE = "ARG_MOVIE"
-
-        fun bundleArgs(movie: Movie): Bundle {
-            return Bundle().apply {
-                this.putParcelable(ARG_MOVIE, movie)
-            }
-        }
+        val TAG = UpcomingMoviesFragment::class.java.simpleName
     }
 
-    @Inject
-    lateinit var presenter: MovieDetailsPresenter
-    var movie: Movie? = null
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_movie_details, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupObservers()
+    }
+
     private val movieImageUrlBuilder = MovieImageUrlBuilder()
 
-    override fun initData() {
-        movie?.let {
-
-        }
+    private fun setupObservers() {
+        viewModel.basketPayables.observe(viewLifecycleOwner, Observer { showMovie(it) })
     }
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_movie_details, container, false)
-        super.onCreateView(inflater, container, savedInstanceState)
-        return view
+    override fun initComponent(view: View?, savedInstanceState: Bundle?) {
+        Log.d(TAG, "initComponents")
+        setHasOptionsMenu(false)
     }
 
-    override fun initListeners() {
+    override fun createViewModel(): MovieDetailsViewModel {
+        return ViewModelProvider(this, viewModelFactory)
+                .get(MovieDetailsViewModel::class.java)
+    }
+
+    fun showMovie(movie: Movie) {
         context?.let { ctx ->
             movie?.let {
+                it.title?.let { setToolbarTitle(it) }
                 fragment_movie_details__textview_title.text = it.title
                 fragment_movie_details__textview_genre.text = it.genres?.joinToString(separator = ", ") { it.name }
                 fragment_movie_details__textview_releasedate.text = it.releaseDate
@@ -69,22 +70,5 @@ class MovieDetailsFragment : BaseFragment(), MovieDetailsView {
                         .into(fragment_movie_details__imageview_poster)
             }
         }
-    }
-
-    override fun initComponent(view: View?, savedInstanceState: Bundle?) {
-        Log.d(TAG, "initComponents")
-
-        movie = getArguments()?.getParcelable<Movie?>(ARG_MOVIE)
-        presenter.bindView(this)
-        movie?.title?.let { setToolbarTitle(it) }
-    }
-
-    override fun showError(message: String?) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.unbindView()
     }
 }

@@ -9,9 +9,6 @@
         android:id="@+id/upcomingMoviesFragment"
         android:name="com.moviesdb.ui.movies.UpcomingMoviesFragment"
         tools:layout="@layout/fragment_upcoming_movies">
-        <action
-            android:id="@+id/action_upcomingMoviesFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
     </fragment>
 
     <fragment

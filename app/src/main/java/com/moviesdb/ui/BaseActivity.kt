@@ -10,10 +10,8 @@ abstract class BaseActivity : AppCompatActivity {
 
     protected val TAG: String
 
-    private var tryToClose: Date? = null
     private var blockOnBackPress = false
     protected var layoutId: Int = 0
-    protected var questionBeforeClose = true
 
     constructor(layoutId: Int) : super() {
         this.TAG = this.javaClass.simpleName
@@ -52,52 +50,5 @@ abstract class BaseActivity : AppCompatActivity {
         actionBar?.setTitle(title)
         supportActionBar?.setTitle(title)
     }
-
-//    fun backClicked(navController: NavController, appBarConfiguration: AppBarConfiguration) {
-//        onSupportNavigateUp(navController, appBarConfiguration, true)
-//    }
-
-//    fun onSupportNavigateUp(
-//            navController: NavController,
-//            appBarConfiguration: AppBarConfiguration,
-//            onBackPressed: Boolean
-//    ): Boolean {
-//        if (this.blockOnBackPress) {
-//            return false
-//        }
-//
-//        if (!questionBeforeClose) {
-//            if (!onBackPressed)
-//                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-//            else super.onBackPressed()
-//        }
-//
-//        if (this.hasBackStack()) {
-//            if (!onBackPressed)
-//                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-//            else {
-//                super.onBackPressed()
-//                return false
-//            }
-//        }
-//
-//        if (this.tryToClose != null) {
-//            val tryToCloseAgain = Date()
-//            val diff = tryToCloseAgain.time - tryToClose!!.time
-//            val diffSec = diff / 1000
-//
-//            if (diffSec > 1) {
-//                this.tryToClose = null
-//            } else {
-//                if (!onBackPressed)
-//                    return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-//                else super.onBackPressed()
-//            }
-//        }
-//
-//        this.tryToClose = Date()
-//        Toast.makeText(this, getString(R.string.message_close_app), Toast.LENGTH_SHORT).show()
-//        return false
-//    }
 }
 

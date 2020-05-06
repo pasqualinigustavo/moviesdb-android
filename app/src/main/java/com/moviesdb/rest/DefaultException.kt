@@ -1,7 +1,5 @@
 package com.moviesdb.rest
 
-import com.squareup.moshi.JsonDataException
-import com.squareup.moshi.Moshi
 import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -10,12 +8,12 @@ import java.net.HttpURLConnection
 
 
 class DefaultException(
-    val msg: String?,
-    private val exceptionURL: String?,
-    private val exceptionResponse: Response<*>?,
-    private val exceptionKind: Kind,
-    private val exception: Throwable,
-    private val exceptionRetrofit: Retrofit?
+        val msg: String?,
+        private val exceptionURL: String?,
+        private val exceptionResponse: Response<*>?,
+        private val exceptionKind: Kind,
+        private val exception: Throwable,
+        private val exceptionRetrofit: Retrofit?
 ) : RuntimeException() {
 
     private var errorBody: String? = null
@@ -31,19 +29,19 @@ class DefaultException(
         const val INTERNAL_SERVER_ERROR_HTTP_CODE = 500
 
         fun httpError(
-            throwable: Throwable,
-            url: String,
-            response: Response<*>,
-            retrofit: Retrofit
+                throwable: Throwable,
+                url: String,
+                response: Response<*>,
+                retrofit: Retrofit
         ): DefaultException {
             val message = response.code().toString() + " " + response.message()
             return DefaultException(
-                message,
-                url,
-                response,
-                Kind.fromStatusCode(response.code()),
-                throwable,
-                retrofit
+                    message,
+                    url,
+                    response,
+                    Kind.fromStatusCode(response.code()),
+                    throwable,
+                    retrofit
             )
         }
 
@@ -60,28 +58,13 @@ class DefaultException(
         }
     }
 
-    /** Identifies the event kind which triggered a [DefaultException].  */
     enum class Kind {
-        /** An [IOException] occurred while communicating to the server.  */
         NETWORK,
-        /** A non-200 HTTP status code was received from the server.  */
         HTTP,
-        /**
-         * An internal error occurred while attempting to execute a request. It is best practice to
-         * re-throw this exception so your application crashes.
-         */
         UNEXPECTED,
-
         UNAUTHORIZED,
-
         NOT_LINKED,
-
-        /**
-         * We are considering this kind of error as success, because there is no request problem
-         * - TODO Investigate with more details
-         */
         NULL_POINTER,
-
         FORBIDDEN;
 
         companion object {
@@ -97,52 +80,20 @@ class DefaultException(
         }
     }
 
-    /** The request URL which produced the error.  */
     fun getUrl(): String? {
         return exceptionURL
     }
 
-    /** Response object containing status code, headers, body, etc.  */
     fun getResponse(): Response<*>? {
         return exceptionResponse
     }
 
-    /** The event kind which triggered this error.  */
     fun getKind(): Kind {
         return exceptionKind
     }
 
-    /** The Retrofit this request was executed on  */
     fun getRetrofit(): Retrofit? {
         return exceptionRetrofit
-    }
-
-    /**
-     * HTTP accountModel body converted to specified `type`. `null` if there is no
-     * response.
-     *
-     */
-    fun <T> getErrorBodyAs(type: Class<T>): T? {
-        val safeErrorBody = errorBody ?: return null
-
-        val moshi = Moshi.Builder()
-            .build()
-
-        try {
-            val jsonAdapter = try {
-                moshi.adapter(type)
-            } catch (jsonDataException: JsonDataException) {
-                jsonDataException.printStackTrace()
-                return null
-            }
-            jsonAdapter?.let {
-               return jsonAdapter.fromJson(safeErrorBody)
-            }
-            return null
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
-            return null
-        }
     }
 
     fun isTimeout(): Boolean {

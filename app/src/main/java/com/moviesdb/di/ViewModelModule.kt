@@ -35,6 +35,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.moviesdb.ui.ViewModelFactory
 import com.moviesdb.ui.movies.UpcomingMoviesViewModel
+import com.moviesdb.ui.movies.details.MovieDetailsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -45,7 +46,12 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(UpcomingMoviesViewModel::class)
-    abstract fun bindUpcomingMoviesFragmentViewModel(dashboardViewModel: UpcomingMoviesViewModel): ViewModel
+    abstract fun bindUpcomingMoviesFragmentViewModel(upcomingMoviesViewModel: UpcomingMoviesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieDetailsViewModel::class)
+    abstract fun bindMovieDetailsFragmentViewModel(movieDetailsViewModel: MovieDetailsViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

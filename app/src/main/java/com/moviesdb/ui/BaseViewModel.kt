@@ -3,6 +3,7 @@ package com.moviesdb.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.moviesdb.application.AnalyticsProvider
+import com.moviesdb.navigator.Navigator
 import com.moviesdb.rest.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import java.io.Serializable
@@ -10,51 +11,25 @@ import java.io.Serializable
 abstract class BaseViewModel
 constructor(
         val schedulerProviderFacade: SchedulerProvider,
-        val analyticsProvider: AnalyticsProvider
+        val analyticsProvider: AnalyticsProvider,
+        val navigator: Navigator
 ) :
         ViewModel() {
 
-//    @Inject
-//    lateinit var logoutUsecase: LogoutUsecase
-//
-//    private final val isAuthenticated =
-//        this.javaClass.getAnnotation(Authenticated::class.java) != null
-
-    final val params = MutableLiveData<Serializable>()
-
-    final val loading = MutableLiveData<Boolean>()
-    //    final val recoverableError = MutableLiveData<PageErrorViewModel>()
-    final val disposables = CompositeDisposable()
+    val params = MutableLiveData<Serializable>()
+    //val errorHandler = MutableLiveData<PageErrorViewModel>()
+    val loading = MutableLiveData<Boolean>()
+    val disposables = CompositeDisposable()
 
     private var isAllowedToAccessTheDashboard = false
-
-    fun isAllowedToAccessTheDashboard() = isAllowedToAccessTheDashboard
-
-//    final fun ifAuthenticated(authFunc: () -> Unit) {
-//        if (authRepository.isAuthenticated()) {
-//            authFunc()
-//        }
-//    }
 
     override fun onCleared() {
         disposables.clear()
     }
 
     open fun onAttached() {
-//        checkIfUserShouldStartTheLogin()
-//        recoverableError.value = PageErrorViewModel(PageErrorType.NO_ERROR)
-    }
 
-//    fun checkIfUserShouldStartTheLogin() {
-//        val shouldStartTheLogin = isAuthenticated
-//                && !authRepository.isAuthenticated()
-//                && !navigator.inLoginFlow
-//
-//        if (shouldStartTheLogin)
-//            navigator.dispatchNavigationEvent(Navigator.NavigationEvent.START_LOGIN)
-//
-//        isAllowedToAccessTheDashboard = !shouldStartTheLogin
-//    }
+    }
 
     fun onDetach() {
 
@@ -64,7 +39,7 @@ constructor(
 
     }
 
-//    fun showNetworkError(retry: () -> Unit) {
+    //    fun showNetworkError(retry: () -> Unit) {
 //        recoverableError.value = PageErrorViewModel(PageErrorType.NETWORK, retry)
 //    }
 //
@@ -94,15 +69,5 @@ constructor(
 //            ) { retryHandler?.invoke() }
 //        )
 //    }
-
-    fun onLogout() {
-//        disposables.add(
-//            logoutUsecase.execute()
-//                .applySchedulers(schedulerProviderFacade)
-//                .subscribe {
-//                    navigator.dispatchNavigationEvent(Navigator.NavigationEvent.LOGOUT)
-//                }
-//        )
-    }
 }
 

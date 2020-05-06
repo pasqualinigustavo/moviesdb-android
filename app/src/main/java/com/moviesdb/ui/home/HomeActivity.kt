@@ -2,29 +2,22 @@ package com.moviesdb.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import com.google.android.material.navigation.NavigationView
+import androidx.navigation.findNavController
 import com.moviesdb.R
 import com.moviesdb.di.Injectable
 import com.moviesdb.model.interfaces.ActivityToolbarBehaviour
-import com.moviesdb.ui.BaseActivity
+import com.moviesdb.navigator.SharedEvents
+import com.moviesdb.ui.home.router.HomeNavigator
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.actionbar.*
 import javax.inject.Inject
 
-class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehaviour,
-        NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector, Injectable {
-
-    //    @Inject
-//    lateinit var presenter: HomePresenter
-    private lateinit var navController: NavController
+class HomeActivity : AppCompatActivity(), ActivityToolbarBehaviour, HasSupportFragmentInjector, Injectable {
 
     companion object {
         val TAG = HomeActivity::class.java.simpleName
@@ -35,22 +28,12 @@ class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehavi
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
-    override fun initComponents() {
-//        presenter.bindView(this)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        createActionBar()
-        initNavigation()
-        navController = Navigation.findNavController(this, R.id.nav_host)
-
-        //setupWithNavController(toolbar, navController)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY)
         super.onCreate(savedInstanceState)
-    }
+        window.requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY)
+        setContentView(R.layout.activity_main)
 
-    override fun initData() {
+        createActionBar()
     }
 
     override fun setToolbarTitle(title: String) {
@@ -71,32 +54,21 @@ class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehavi
         }
     }
 
-    private fun initNavigation() {
-        //nav_view.setNavigationItemSelectedListener(this)
-    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return item.onNavDestinationSelected(findNavController(R.id.nav_host))
-//                || super.onOptionsItemSelected(item)
-//    }
-
     fun displayHomeUp() {
-        val isRoot = !this.hasBackStack()
-        //drawerToggle?.setDrawerIndicatorEnabled(isRoot)
+        val isRoot = !hasBackStack()
 
         if (supportActionBar != null) {
             supportActionBar?.setDisplayShowHomeEnabled(!isRoot)
             supportActionBar?.setDisplayHomeAsUpEnabled(!isRoot)
             supportActionBar?.setHomeButtonEnabled(!isRoot)
         }
-
-        if (isRoot) {
-            //this.drawerToggle?.syncState()
-        }
     }
 
-    override fun initListeners() {
-
+    protected fun hasBackStack(): Boolean {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host)
+        if (navHostFragment?.getChildFragmentManager() != null)
+            return navHostFragment.getChildFragmentManager().backStackEntryCount > 0
+        return false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -107,17 +79,13 @@ class HomeActivity : BaseActivity(R.layout.activity_main), ActivityToolbarBehavi
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        displayHomeUp()
-        return true
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host).navigateUp()
     }
 
-//    override fun onBackPressed() {
-//        backClicked(navController, appBarConfiguration)
-//    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+    override fun onBackPressed() {
+        if (this.hasBackStack())
+            findNavController(R.id.nav_host).navigateUp() || super.onSupportNavigateUp()
+        else super.onBackPressed()
     }
 }

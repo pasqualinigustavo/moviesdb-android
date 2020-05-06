@@ -1,22 +1,34 @@
 package com.moviesdb.ui.home.router
 
-import androidx.navigation.Navigation
 import com.moviesdb.R
-import com.moviesdb.model.Movie
-import com.moviesdb.ui.home.HomeActivity
-import com.moviesdb.ui.movies.details.MovieDetailsFragment
+import com.moviesdb.navigator.NavigationController
+import com.moviesdb.navigator.Navigator
+import com.moviesdb.navigator.SharedEvents
+import timber.log.Timber
 
-class HomeNavigator(private val activity: HomeActivity) {
+class HomeNavigator(sharedEvents: SharedEvents) : Navigator(sharedEvents) {
 
-    companion object {
-        private val TAG = HomeNavigator::class.java.simpleName
-    }
-
-    fun showMovieDetails(movie: Movie) {
-        val navController = Navigation.findNavController(activity, R.id.nav_host)
-
-        //by bundle
-        val args = MovieDetailsFragment.bundleArgs(movie)
-        navController.navigate(R.id.movieDetailsFragment, args)
+    override fun handleNavigationEvent(
+            navigationState: NavigationEventData,
+            navController: NavigationController
+    ): Boolean {
+        Timber.d("MainNavigator navigation destination: " + navigationState.event.name)
+        when (navigationState.event) {
+            NavigationEvent.MOVIE_DETAILS -> navigate(
+                    R.id.movieDetailsFragment,
+                    navController,
+                    navigationState.data
+            )
+            NavigationEvent.POP_BACKSTACK -> {
+                if (!finish(navController)) {
+                    return false
+                }
+            }
+            else -> {
+                Timber.d("MainNavigator unknow navigation destination: " + navigationState.event.name)
+                return false
+            }
+        }
+        return true
     }
 }

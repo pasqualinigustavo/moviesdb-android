@@ -110,7 +110,6 @@ class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Fact
             Timber.e(throwable, "RxErrorHandler")
             throwable.printStackTrace()
 
-            // We had non-200 http error
             if (throwable is HttpException) {
                 val response = throwable.response()
                 return DefaultException.httpError(
@@ -120,7 +119,7 @@ class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Fact
                     retrofit
                 )
             }
-            // A network error happened
+
             return when (throwable) {
                 is IOException -> {
                     DefaultException.networkError(throwable)
@@ -130,8 +129,6 @@ class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Fact
                 }
                 else -> DefaultException.unexpectedError(throwable)
             }
-
-            // We don't know what happened. We need to simply convert to an unknown error
         }
 
     }

@@ -59,8 +59,7 @@ fun identityThrowable(
     //app wide forced error handling
     if (throwable is DefaultException) {
         when {
-            //throwable.isForbidden() -> viewModel.showTermsAndConditions()
-            throwable.isUnauthorized() -> viewModel.onLogout()
+//            throwable.isForbidden() -> viewModel.showTermsAndConditions()
             //throwable.isNotLinked() -> viewModel.notLinked()
 //            (throwable.isUnexpected()) && recoveryHandler != null -> viewModel.showFullScreenError(
 //                    recoveryHandler

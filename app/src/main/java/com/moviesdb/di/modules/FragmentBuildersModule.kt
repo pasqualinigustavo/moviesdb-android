@@ -1,6 +1,7 @@
 package com.moviesdb.di.modules
 
 import com.moviesdb.ui.movies.UpcomingMoviesFragment
+import com.moviesdb.ui.movies.details.MovieDetailsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -9,4 +10,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeUpcomingMoviesFragment(): UpcomingMoviesFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeMovieDetailsFragment(): MovieDetailsFragment
 }
