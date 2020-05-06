@@ -2,8 +2,8 @@ package com.moviesdb.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.moviesdb.di.Injectable
@@ -36,6 +36,22 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), Injectable 
 //                Observer { handleError(it) })
 //
         viewModel.onAttached()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        init(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(
+                viewLifecycleOwner,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        val isThereSomethingToPop = navController().finish()
+                        if (!isThereSomethingToPop) {
+                            activity?.finish()
+                        }
+                    }
+                }
+        )
     }
 
     fun navController() =

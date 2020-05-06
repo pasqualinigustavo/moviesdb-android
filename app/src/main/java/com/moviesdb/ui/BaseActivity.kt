@@ -39,13 +39,6 @@ abstract class BaseActivity : AppCompatActivity {
         this.initData()
     }
 
-    protected fun hasBackStack(): Boolean {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host)
-        if (navHostFragment?.getChildFragmentManager() != null)
-            return navHostFragment.getChildFragmentManager().backStackEntryCount > 0
-        return false
-    }
-
     override fun setTitle(@StringRes title: Int) {
         actionBar?.setTitle(title)
         supportActionBar?.setTitle(title)

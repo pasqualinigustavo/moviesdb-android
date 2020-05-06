@@ -19,12 +19,6 @@ abstract class Navigator(val sharedEvents: SharedEvents) {
             return sharedEvents.navigationResultEvent
         }
 
-    fun setFinishData(data: Serializable?) {
-        data?.let {
-            sharedEvents.navigationResultEvent.value = data
-        }
-    }
-
     fun observeEvents(owner: LifecycleOwner, navController: NavigationController) {
         navigationEvent.observe(owner, Observer {
             if (owner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED))
@@ -32,37 +26,6 @@ abstract class Navigator(val sharedEvents: SharedEvents) {
                     navigationEvent.value = null
                 }
         })
-    }
-
-    fun observeNavigationResult(owner: LifecycleOwner, observer: Observer<in Serializable>) {
-        navigationResultEvent.observe(owner, observer)
-    }
-
-    fun showFullScreenError(data: Serializable, navController: NavigationController) {
-//        val model = data as FullScreenErrorViewModel
-//        val exitAction = model.exitAction?.let { it } ?: {
-//            navController.finish()
-//        }
-//        navController.showDialog(
-//            FullScreenErrorDialog(
-//                model.recoveryAction,
-//                exitAction
-//            )
-//        )
-    }
-
-    fun showErrorDialog(data: Serializable, navController: NavigationController) {
-//        val model = data as ErrorDialogViewModel
-//        val exitAction = model.exitAction?.let { it } ?: {
-//            navController.finish()
-//        }
-//        navController.showDialog(
-//            ErrorDialog(
-//                model.errorTitle,
-//                model.errorContent,
-//                exitAction
-//            )
-//        )
     }
 
     abstract fun handleNavigationEvent(
@@ -90,10 +53,6 @@ abstract class Navigator(val sharedEvents: SharedEvents) {
 
     fun finish(navController: NavigationController): Boolean {
         return navController.finish()
-    }
-
-    fun openWebBrowser(navController: NavigationController, url: String) {
-        navController.openWebBrowser(url)
     }
 
     data class NavigationEventData(val event: NavigationEvent, val data: Serializable? = null)

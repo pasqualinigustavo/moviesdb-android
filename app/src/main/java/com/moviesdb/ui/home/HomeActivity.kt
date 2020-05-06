@@ -10,8 +10,6 @@ import androidx.navigation.findNavController
 import com.moviesdb.R
 import com.moviesdb.di.Injectable
 import com.moviesdb.model.interfaces.ActivityToolbarBehaviour
-import com.moviesdb.navigator.SharedEvents
-import com.moviesdb.ui.home.router.HomeNavigator
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.actionbar.*

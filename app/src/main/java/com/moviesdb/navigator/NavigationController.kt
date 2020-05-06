@@ -14,6 +14,9 @@ class NavigationController(
         private val context: Context
 ) {
 
+    companion object {
+        const val DATA_KEY = "data"
+    }
 
     val currentId: Int?
         get() = navController.currentDestination?.id
@@ -33,13 +36,4 @@ class NavigationController(
     fun finish(): Boolean {
         return navController.popBackStack()
     }
-
-    fun downloadFile(fileUrl: String) {
-        openWebBrowser(fileUrl)
-    }
-
-    companion object {
-        const val DATA_KEY = "data"
-    }
-
 }
