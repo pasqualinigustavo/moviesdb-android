@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UpcomingMoviesRepository @Inject constructor(var apiComm: APIComm) {
+open class UpcomingMoviesRepository @Inject constructor(var apiComm: APIComm) {
 
     fun getUpcomingMovies(page: Long): Observable<UpcomingMoviesResponse> {
         return apiComm.tmdbEndpoint().upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, page, TmdbApi.DEFAULT_REGION)

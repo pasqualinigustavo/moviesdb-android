@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class GetUpcomingMoviesUsecase @Inject constructor(
+open class GetUpcomingMoviesUsecase @Inject constructor(
         var upcomingMoviesRepository: UpcomingMoviesRepository
 ) {
     fun getUpcomingMovies(page: Long): Observable<UpcomingMoviesResponse> {

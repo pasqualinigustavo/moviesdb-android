@@ -6,7 +6,7 @@ import com.moviesdb.navigator.Navigator
 import com.moviesdb.navigator.SharedEvents
 import timber.log.Timber
 
-class HomeNavigator(sharedEvents: SharedEvents) : Navigator(sharedEvents) {
+open class HomeNavigator(sharedEvents: SharedEvents) : Navigator(sharedEvents) {
 
     override fun handleNavigationEvent(
             navigationState: NavigationEventData,
