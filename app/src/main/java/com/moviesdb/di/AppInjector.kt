@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.moviesdb.application.MoviesDBApplication
 import com.moviesdb.di.components.DaggerAppComponent
+import com.moviesdb.ui.splash.SplashActivity
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
@@ -53,6 +54,9 @@ object AppInjector {
 
     private fun handleActivity(activity: Activity) {
         if (activity is HasSupportFragmentInjector) {
+            AndroidInjection.inject(activity)
+        }
+        if (activity is SplashActivity) {
             AndroidInjection.inject(activity)
         }
         if (activity is FragmentActivity) {

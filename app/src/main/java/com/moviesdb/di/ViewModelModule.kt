@@ -36,6 +36,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.moviesdb.ui.ViewModelFactory
 import com.moviesdb.ui.movies.UpcomingMoviesViewModel
 import com.moviesdb.ui.movies.details.MovieDetailsViewModel
+import com.moviesdb.ui.splash.SplashActivityViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -52,6 +53,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MovieDetailsViewModel::class)
     abstract fun bindMovieDetailsFragmentViewModel(movieDetailsViewModel: MovieDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashActivityViewModel::class)
+    abstract fun bindSplashActivityViewModel(splashActivityViewModel: SplashActivityViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

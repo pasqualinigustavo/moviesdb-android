@@ -21,8 +21,6 @@ constructor(
     val loading = MutableLiveData<Boolean>()
     val disposables = CompositeDisposable()
 
-    private var isAllowedToAccessTheDashboard = false
-
     override fun onCleared() {
         disposables.clear()
     }

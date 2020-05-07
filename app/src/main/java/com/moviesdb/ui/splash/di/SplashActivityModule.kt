@@ -4,6 +4,7 @@ import com.moviesdb.ui.splash.SplashActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
+
 @Suppress("unused")
 @Module
 abstract class SplashActivityModule {

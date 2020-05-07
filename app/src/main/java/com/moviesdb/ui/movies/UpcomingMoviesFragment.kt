@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_upcoming_movies.*
  * @author Gustavo Pasqualini
  */
 
-class UpcomingMoviesFragment : BaseFragment<UpcomingMoviesViewModel>(), Injectable {
+class UpcomingMoviesFragment : BaseFragment<UpcomingMoviesViewModel>() {
 
     companion object {
         val TAG = UpcomingMoviesFragment::class.java.simpleName

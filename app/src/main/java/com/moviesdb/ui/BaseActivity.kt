@@ -1,47 +1,45 @@
 package com.moviesdb.ui
 
+import android.content.Context
 import android.os.Bundle
-import androidx.annotation.StringRes
+import android.os.PersistableBundle
+import android.util.AttributeSet
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.moviesdb.R
-import java.util.*
+import androidx.lifecycle.ViewModelProvider
+import com.moviesdb.di.Injectable
+import javax.inject.Inject
 
-abstract class BaseActivity : AppCompatActivity {
+abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity, Injectable {
 
     protected val TAG: String
-
-    private var blockOnBackPress = false
     protected var layoutId: Int = 0
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: ViewModel
+
 
     constructor(layoutId: Int) : super() {
         this.TAG = this.javaClass.simpleName
-
         this.layoutId = layoutId
     }
 
-    protected abstract fun initComponents()
+    protected abstract fun setupObservers()
 
-    protected abstract fun initData()
-
-    protected abstract fun initListeners()
+    abstract fun createViewModel(): ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.setContentView(this.layoutId)
-
-        this.init()
+        setContentView(layoutId)
+        init()
     }
 
     protected fun init() {
-        this.blockOnBackPress = false
-        this.initComponents()
-        this.initListeners()
-        this.initData()
-    }
-
-    override fun setTitle(@StringRes title: Int) {
-        actionBar?.setTitle(title)
-        supportActionBar?.setTitle(title)
+        viewModel = createViewModel()
+        setupObservers()
+        //viewModel.params.value = arguments?.getSerializable(NavigationController.DATA_KEY)
+        viewModel.onAttached()
     }
 }
 
