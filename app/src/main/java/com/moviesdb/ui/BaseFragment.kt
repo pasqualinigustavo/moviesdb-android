@@ -32,10 +32,6 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), Injectable 
         setupObservers()
         viewModel.navigator.observeEvents(this, navController())
         viewModel.params.value = arguments?.getSerializable(NavigationController.DATA_KEY)
-//        viewModel.errorHandler.observe(
-//                viewLifecycleOwner,
-//                Observer { handleError(it) })
-//
         viewModel.onAttached()
     }
 

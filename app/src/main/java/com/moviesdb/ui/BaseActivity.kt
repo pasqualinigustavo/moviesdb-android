@@ -1,10 +1,6 @@
 package com.moviesdb.ui
 
-import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.AttributeSet
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.moviesdb.di.Injectable
@@ -38,7 +34,6 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity, Inje
     protected fun init() {
         viewModel = createViewModel()
         setupObservers()
-        //viewModel.params.value = arguments?.getSerializable(NavigationController.DATA_KEY)
         viewModel.onAttached()
     }
 }

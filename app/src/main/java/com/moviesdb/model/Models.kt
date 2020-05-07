@@ -3,9 +3,9 @@ package com.moviesdb.model
 import com.squareup.moshi.Json
 import java.io.Serializable
 
-data class GenreResponse(val genres: List<Genre>)
+data class GenreResponse(@Json(name = "genres") val genres: List<Genre>)
 
-data class Genre(val id: Int, val name: String)
+data class Genre(@Json(name = "id") val id: Int, @Json(name = "name") val name: String)
 
 data class UpcomingMoviesResponse(
         val page: Int,

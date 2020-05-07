@@ -1,6 +1,5 @@
 package com.moviesdb.commom.extension
 
-import com.moviesdb.rest.DefaultException
 import com.moviesdb.rest.SchedulerProvider
 import com.moviesdb.ui.BaseViewModel
 import io.reactivex.Observable
@@ -39,35 +38,8 @@ fun <T> Observable<T>.applyErrorHandling(
         recoveryHandler: (() -> Unit)? = null
 ): Observable<T> {
     return this.doOnSubscribe {
-        viewModel.hideNetworkError()
     }.onErrorResumeNext { throwable: Throwable ->
-        identityThrowable(
-                throwable,
-                viewModel,
-                recoveryHandler
-        )
         Observable.error(throwable)
-    }
-}
-
-
-fun identityThrowable(
-        throwable: Throwable,
-        viewModel: BaseViewModel,
-        recoveryHandler: (() -> Unit)?
-){
-    //app wide forced error handling
-    if (throwable is DefaultException) {
-        when {
-//            throwable.isForbidden() -> viewModel.showTermsAndConditions()
-            //throwable.isNotLinked() -> viewModel.notLinked()
-//            (throwable.isUnexpected()) && recoveryHandler != null -> viewModel.showFullScreenError(
-//                    recoveryHandler
-//            )
-//            throwable.isTimeout() && recoveryHandler != null -> viewModel.showNetworkError(
-//                    recoveryHandler
-//            )
-        }
     }
 }
 

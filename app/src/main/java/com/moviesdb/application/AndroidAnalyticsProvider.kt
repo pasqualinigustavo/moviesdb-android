@@ -16,9 +16,4 @@ class AndroidAnalyticsProvider(context: Context) :
 
 interface AnalyticsProvider {
     fun logEvent(event: String, params: Map<String, String>)
-
-    companion object {
-        val SIGN_UP = "sign_up"
-        val LOGIN = "login"
-    }
 }
