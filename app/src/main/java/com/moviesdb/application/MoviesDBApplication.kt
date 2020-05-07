@@ -3,14 +3,17 @@ package com.moviesdb.application
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.os.Build
+import android.security.NetworkSecurityPolicy
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.moviesdb.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import timber.log.Timber
 import javax.inject.Inject
 
-class MoviesDBApplication : Application(), HasActivityInjector {
+open class MoviesDBApplication : Application(), HasActivityInjector {
 
     private var instance: MoviesDBApplication? = null
     @Inject
@@ -22,8 +25,12 @@ class MoviesDBApplication : Application(), HasActivityInjector {
     }
 
     override fun onCreate() {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate()
+        init()
+    }
+
+    open fun init() {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         instance = this
 
         // Context

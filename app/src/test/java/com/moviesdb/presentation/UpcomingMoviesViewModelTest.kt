@@ -28,7 +28,7 @@ class UpcomingMoviesViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    final var sharedEvents: SharedEvents = mock()
+    var sharedEvents: SharedEvents = mock()
     var navigator: Navigator = spy(
             HomeNavigator(
                     sharedEvents
