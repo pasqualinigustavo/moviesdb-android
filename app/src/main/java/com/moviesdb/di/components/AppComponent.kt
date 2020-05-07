@@ -4,6 +4,7 @@ import android.app.Application
 import com.moviesdb.application.MoviesDBApplication
 import com.moviesdb.di.modules.AppModule
 import com.moviesdb.ui.home.di.MainActivityModule
+import com.moviesdb.ui.splash.di.SplashActivityModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -14,6 +15,7 @@ import javax.inject.Singleton
         modules = [
             AppModule::class,
             MainActivityModule::class,
+            SplashActivityModule::class,
             AndroidInjectionModule::class]
 )
 interface AppComponent {

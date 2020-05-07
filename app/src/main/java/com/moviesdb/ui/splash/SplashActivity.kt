@@ -3,36 +3,25 @@ package com.moviesdb.ui.splash
 import android.content.Intent
 import android.os.Bundle
 import android.view.Window
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.moviesdb.R
-import com.moviesdb.splash.SplashView
-import com.moviesdb.splash.di.DaggerSplashComponent
-import com.moviesdb.splash.di.SplashComponent
-import com.moviesdb.splash.di.SplashModule
-import com.moviesdb.ui.BaseActivity
+import com.moviesdb.di.Injectable
 import com.moviesdb.ui.home.HomeActivity
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-class SplashActivity : BaseActivity(R.layout.activity_splash), SplashView {
+class SplashActivity : AppCompatActivity(), Injectable {
 
     companion object {
-        val TAG: String = SplashActivity::class.java.simpleName
-    }
-
-//    @Inject
-//    lateinit var presenter: SplashPresenter
-
-    override fun initComponents() {
-//        presenter.bindView(this)
+        val TAG = SplashActivity::class.java.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY)
         super.onCreate(savedInstanceState)
-    }
-
-    override fun initData() {
-//        presenter.loadGenres()
+        setContentView(R.layout.activity_splash)
 
         val intent = Intent(this, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME)
@@ -40,16 +29,24 @@ class SplashActivity : BaseActivity(R.layout.activity_splash), SplashView {
         finish()
     }
 
-    override fun initListeners() {
-
+    /***
+     *     fun loadGenres(): Observable<GenreResponse> {
+    return apiComm.tmdbEndpoint().genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE)
+    .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
     }
 
-    override fun showError(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    fun loadGenres() {
+    Log.d(TAG, "loadGenres")
+    interactor.loadGenres()
+    .subscribe({ response ->
+    Cache.genres = response.genres
+    launchTheApp()
+    }, {
+    launchTheApp()
+    })
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        presenter.unbindView()
-    }
+     *
+     *
+     *
+     */
 }
